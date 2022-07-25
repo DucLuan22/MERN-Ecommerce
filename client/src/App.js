@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -6,7 +5,7 @@ import ProductPage from "./pages/ProductPage";
 import Cart from "./pages/ProductPage";
 function App() {
   const location = useLocation();
-  const noNav = ["/cart"];
+  const noNav = ["/login, /register"];
   return (
     <>
       {!noNav.includes(location.pathname) && <Navbar />}

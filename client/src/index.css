@@ -9,3 +9,16 @@
 .cart-notify {
   border-radius: 100%;
 }
+.page-num {
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: 400;
+}
+.active {
+  background: grey;
+}
+.page-num:hover {
+  background-color: lightgrey;
+  transition-duration: 500ms;
+  transition-property: background-color;
+}
