@@ -5,7 +5,7 @@ import { AiOutlineShoppingCart, AiOutlineMenu } from "react-icons/ai";
 function Navbar() {
   const [isDrop, setIsDrop] = useState(false);
   return (
-    <nav className="shadow-md w-screen fixed top-0 left-0">
+    <nav className="shadow-md w-screen fixed top-0 left-0 z-10">
       <div className="md:flex items-center justify-around bg-white py-4 md:px-10 px-7">
         <div className="font-bold text-3xl cursor-pointer flex items-center text-gray-800">
           Luan
