@@ -3,7 +3,7 @@ import React from 'react'
 import { Link } from "react-router-dom";
 const ProductCard = ({title}) => {
   return (
-        <article className="border-solid border-[1px] border-gray-500 w-[280px] h-[380px] rounded-t-xl bg-zinc-50 my-3 flex flex-col justify-start hover:shadow-xl transition duration-500">
+        <article className="border-solid border-[1px] border-gray-500 w-[280px] bottom-0 h-[380px] hover:relative hover:bottom-3 rounded-t-xl bg-zinc-50 my-3 flex flex-col justify-start hover:shadow-xl transition-all duration-300 ease-in-out">
               <img
                 src="https://phucanhcdn.com/media/product/37381_laptop_microsoft_laptop_3_ryzen_7_1_2.jpg"
                 alt="laptop"
