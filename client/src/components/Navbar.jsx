@@ -11,7 +11,7 @@ function Navbar() {
           Luan
         </div>
         <div className="text-3xl absolute right-8 top-6 md:hidden">
-          <AiOutlineMenu onClick={()=>setIsDrop(!isDrop)}/>
+          <AiOutlineMenu onClick={() => setIsDrop(!isDrop)} />
         </div>
         <ul
           className={`text-gray-800 md:flex md:items-center link-list gap-8 font-semibold text-xl md:pb-0 pb-12 absolute md:static bg-white md:z-auto z-[-1] left-0 w-full 
@@ -37,7 +37,7 @@ function Navbar() {
             </span>
           </li>
           <button className="bg-gray-900 text-white py-2 px-6 font-semibold rounded md:ml-8 hover:bg-slate-700 duration-500">
-            Login
+            <Link to="/login">Login</Link>
           </button>
         </ul>
       </div>
