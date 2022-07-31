@@ -1,6 +1,8 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { MdAdminPanelSettings } from "react-icons/md";
+import { Link } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 
 function Login() {
@@ -17,7 +19,7 @@ function Login() {
   };
   return (
     <div className="bg-neutral-200 w-screen h-screen flex justify-center items-center">
-      <form action="" className="w-[500px] h-[450px] bg-white rounded-xl">
+      <form action="" className="w-[500px] h-[470px] bg-white rounded-xl">
         <h1 className="text-center text-3xl font-bold my-5">
           {isUser ? "User Login" : "Admin Login"}
         </h1>
@@ -69,14 +71,61 @@ function Login() {
         <div className="flex flex-col w-[85%] m-auto">
           <div className="flex flex-col gap-y-3">
             <label htmlFor="email" className="font-semibold text-lg">
-              Email
+              {isUser ? "Email" : "Username"}
               <sup className="text-red-700 text font-bold">*</sup>
             </label>
-            <input
-              type="email"
-              className="border-[1px] border-gray-400 h-8 rounded-sm"
-            />
+            {isAdmin && (
+              <input
+                type="text"
+                className="border-[1px] border-gray-400 h-10 rounded-lg p-2"
+                placeholder="Enter the username"
+                required
+              />
+            )}
+            {isUser && (
+              <input
+                type="email"
+                className="border-[1px] border-gray-400 h-10 rounded-lg p-2"
+                placeholder="Enter the email"
+                required
+              />
+            )}
           </div>
+          <div className="flex flex-col gap-y-3 mt-5">
+            <label htmlFor="password" className="font-semibold text-lg">
+              Password
+              <sup className="text-red-700 text font-bold">*</sup>
+            </label>
+            {isAdmin && (
+              <input
+                type="password"
+                className="border-[1px] border-gray-400 h-10 rounded-lg p-2"
+                placeholder="Enter admin password"
+                autoComplete="off"
+                required
+              />
+            )}
+            {isUser && (
+              <input
+                type="password"
+                className="border-[1px] border-gray-400 h-10 rounded-lg p-2"
+                placeholder="Enter user password"
+                autoComplete="off"
+                required
+              />
+            )}
+          </div>
+          <button className="bg- white border-2 border-black mt-7 p-2 font-bold rounded-xl hover:bg-slate-400 transition duration-200 ease-linear">
+            Login
+          </button>
+          {isUser && (
+            <div className="mt-3">
+              Don't have an account?{" "}
+              <Link to="/register" className="text-blue-600">
+                Register
+              </Link>
+            </div>
+          )}
         </div>
       </form>
     </div>
