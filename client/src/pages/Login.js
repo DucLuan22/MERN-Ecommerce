@@ -9,6 +9,9 @@ function Login() {
   const [isUser, setIsUser] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [toolTip, showToolTip] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const showUserForm = () => {
     setIsUser(true);
     setIsAdmin(false);

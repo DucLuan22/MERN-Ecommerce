@@ -1,8 +1,8 @@
 const nodemailer = require("nodemailer");
 
-const sendEmail = (option) => {
+const sendEmail = (options) => {
   const transporter = nodemailer.createTransport({
-    host: "smtp.sendgride.net",
+    host: "smtp.sendgrid.net",
     port: 587,
     server: process.env.EMAIL_SERVICE,
     auth: {
@@ -13,9 +13,9 @@ const sendEmail = (option) => {
 
   const mailOptions = {
     from: process.env.EMAIL_FROM,
-    to: option.to,
-    subject: option.subject,
-    html: option.text,
+    to: options.to,
+    subject: options.subject,
+    html: options.text,
   };
 
   transporter.sendMail(mailOptions, function (err, info) {
@@ -26,5 +26,4 @@ const sendEmail = (option) => {
     }
   });
 };
-
 module.exports = sendEmail;
