@@ -17,6 +17,10 @@ function App() {
         <Route path="/product/:product_id" element={<ProductPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route
+          path="/confirmRegistration/:confirmToken"
+          element={<Register />}
+        />
       </Routes>
     </>
   );
