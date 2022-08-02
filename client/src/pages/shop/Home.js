@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Pagination from "../components/Pagination";
-import Axios from "../configs/axiosConfig";
+import Pagination from "../../components/Pagination";
+import Axios from "../../configs/axiosConfig";
 const Home = () => {
   const [data, setData] = useState([]);
   useEffect(() => {

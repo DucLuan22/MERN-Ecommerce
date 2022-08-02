@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Axios from "../configs/axiosConfig";
+import { Link } from "react-router-dom";
+import Axios from "../../configs/axiosConfig";
 const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm_password, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
-
+  const [success, setSuccess] = useState("");
   const registerHandler = async (e) => {
     e.preventDefault();
     if (password !== confirm_password) {
@@ -25,7 +24,12 @@ const Register = () => {
         email,
         password,
       });
-      navigate("/login");
+      if (data) {
+        setSuccess(data);
+        setTimeout(() => {
+          setSuccess("");
+        }, 10000);
+      }
     } catch (error) {
       setError(error.response.data.error);
       setTimeout(() => {
@@ -43,6 +47,11 @@ const Register = () => {
         {error && (
           <div className="text-center bg-red-400 rounded-lg p-2 opacity-70 top-36 w-[500px] absolute">
             <h1>{error}</h1>
+          </div>
+        )}
+        {success && (
+          <div className="text-center bg-green-400 rounded-lg p-2 opacity-70 top-36 w-[500px] absolute">
+            <h1>{success.data}</h1>
           </div>
         )}
         <h1 className="text-center text-3xl font-bold my-5">Sign Up</h1>
@@ -125,7 +134,7 @@ const Register = () => {
 
           <div className="mt-3">
             Already have an account?{" "}
-            <Link to="/login" className="text-blue-600">
+            <Link to="/auth/login" className="text-blue-600">
               Sign In
             </Link>
           </div>

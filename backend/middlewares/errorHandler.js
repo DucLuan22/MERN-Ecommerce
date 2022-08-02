@@ -1,7 +1,6 @@
 const ErrorResponse = require("../utils/errorResponse");
 
 const errorHandler = (err, req, res, next) => {
-  console.log(err.name);
   let error = { ...err };
   error.message = err.message;
   if (err.code === 11000) {

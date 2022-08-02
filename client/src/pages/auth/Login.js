@@ -1,16 +1,26 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { MdAdminPanelSettings } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
+import Axios from "../../configs/axiosConfig";
 
 function Login() {
   const [isUser, setIsUser] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [toolTip, showToolTip] = useState(true);
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("authToken")) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const showUserForm = () => {
     setIsUser(true);
@@ -20,9 +30,41 @@ function Login() {
     setIsUser(false);
     setIsAdmin(true);
   };
+
+  const loginHandler = async (e) => {
+    e.preventDefault();
+    try {
+      if (email && userPassword) {
+        const { data } = await Axios.post("/api/auth/login", {
+          email,
+          password: userPassword,
+        });
+        console.log(data);
+        localStorage.setItem("authToken", data.token);
+        navigate("/");
+      }
+    } catch (error) {
+      setError(error);
+      console.log(error);
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
+  };
+
   return (
     <div className="bg-neutral-200 w-screen h-screen flex justify-center items-center">
-      <form action="" className="w-[500px] h-[470px] bg-white rounded-xl">
+      <form
+        action=""
+        className="w-[500px] h-[490px] bg-white rounded-xl"
+        onSubmit={loginHandler}
+      >
+        {error && (
+          <div className="text-center bg-red-400 rounded-lg p-2 opacity-70 top-36 w-[500px] absolute">
+            <h1>{error}</h1>
+          </div>
+        )}
+
         <h1 className="text-center text-3xl font-bold my-5">
           {isUser ? "User Login" : "Admin Login"}
         </h1>
@@ -90,6 +132,8 @@ function Login() {
                 type="email"
                 className="border-[1px] border-gray-400 h-10 rounded-lg p-2"
                 placeholder="Enter the email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
                 required
               />
             )}
@@ -114,6 +158,8 @@ function Login() {
                 className="border-[1px] border-gray-400 h-10 rounded-lg p-2"
                 placeholder="Enter user password"
                 autoComplete="off"
+                onChange={(e) => setUserPassword(e.target.value)}
+                value={userPassword}
                 required
               />
             )}
@@ -122,11 +168,19 @@ function Login() {
             Login
           </button>
           {isUser && (
-            <div className="mt-3">
-              Don't have an account?{" "}
-              <Link to="/register" className="text-blue-600">
-                Register
-              </Link>
+            <div>
+              <div className="mt-3">
+                Don't have an account?{" "}
+                <Link to="/auth/register" className="text-blue-600">
+                  Register
+                </Link>
+              </div>
+              <div className="mt-3">
+                Don't remember your password?{" "}
+                <Link to="/auth/forgotPassword" className="text-blue-600">
+                  Forgot Password
+                </Link>
+              </div>
             </div>
           )}
         </div>
