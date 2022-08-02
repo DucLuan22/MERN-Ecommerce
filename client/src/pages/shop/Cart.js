@@ -1,5 +1,5 @@
 import React from "react";
-import CartItem from "../components/CartItem";
+import CartItem from "../../components/CartItem";
 const Cart = () => {
   return (
     <main className="w-screen h-screen bg-neutral-200 fixed overflow-auto">
