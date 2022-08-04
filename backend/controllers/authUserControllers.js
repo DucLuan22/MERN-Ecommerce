@@ -81,8 +81,9 @@ exports.confirmRegistration = async (req, res, next) => {
 //LOST - Login
 exports.login = async (req, res, next) => {
   const { email, password } = req.body;
+
   if (!email || !password) {
-    return next(new ErrorResponse("please provide an email and password"), 400);
+    return next(new ErrorResponse("Please provide an email and password"), 400);
   }
 
   try {
@@ -92,15 +93,14 @@ exports.login = async (req, res, next) => {
       return next(new ErrorResponse("Invalid email", 400));
     }
 
+    if (user.confirmed == false) {
+      return next(new ErrorResponse("Please confirmed your account.", 400));
+    }
     const isMatch = await user.matchPasswords(password);
+
     if (!isMatch) {
       return next(new ErrorResponse("Invalid password", 404));
     }
-
-    if (user.confirmed == false) {
-      return next(new ErrorResponse("Please confirmed your account", 400));
-    }
-
     sendToken(user, 200, res);
   } catch (error) {
     next(error);
