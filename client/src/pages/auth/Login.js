@@ -16,12 +16,6 @@ function Login() {
   const [userPassword, setUserPassword] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (localStorage.getItem("authToken")) {
-      navigate("/");
-    }
-  }, [navigate]);
-
   const showUserForm = () => {
     setIsUser(true);
     setIsAdmin(false);
@@ -34,18 +28,15 @@ function Login() {
   const loginHandler = async (e) => {
     e.preventDefault();
     try {
-      if (email && userPassword) {
-        const { data } = await Axios.post("/api/auth/login", {
-          email,
-          password: userPassword,
-        });
-        console.log(data);
-        localStorage.setItem("authToken", data.token);
-        navigate("/");
-      }
+      const { data } = await Axios.post("/api/auth/login", {
+        email,
+        password: userPassword,
+      });
+
+      localStorage.setItem("authToken", data.token);
+      navigate("/");
     } catch (error) {
-      setError(error);
-      console.log(error);
+      setError(error.response.data.error);
       setTimeout(() => {
         setError("");
       }, 5000);
