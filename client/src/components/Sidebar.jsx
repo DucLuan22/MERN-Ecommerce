@@ -1,35 +1,62 @@
 import React from "react";
 import { useState } from "react";
-import { BsArrowLeftShort, BsChevronDown } from "react-icons/bs";
-import { AiFillEnvironment } from "react-icons/ai";
-import { RiDashboardFill } from "react-icons/ri";
+import { BsArrowLeftShort, BsChevronDown, BsFillBagFill } from "react-icons/bs";
+import {
+  AiFillEnvironment,
+  AiFillShopping,
+  AiOutlineSetting,
+  AiOutlineInbox,
+} from "react-icons/ai";
+import { FaPager } from "react-icons/fa";
+import { MdManageAccounts } from "react-icons/md";
+import { IoLogOutOutline } from "react-icons/io5";
+import { SiSimpleanalytics } from "react-icons/si";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { openSidebar, openSubMenu } from "../features/admin/adminSidebarSlice";
 
 const Sidebar = () => {
-  const [open, setOpen] = useState(true);
+  const { open, openSubMenuItem } = useSelector((state) => state.sidebar);
+  const dispatch = useDispatch();
   const [submenuOpen, setSubMenu] = useState(false);
   const Menus = [
-    { title: "Dashboard" },
-    { title: "Page" },
-    { title: "Media", spacing: true },
+    {
+      title: "Dashboard",
+      icon: <BsFillBagFill />,
+      to: "/admin/dashboard",
+    },
+    {
+      title: "Page",
+      icon: <FaPager />,
+      to: "#",
+    },
+    {
+      title: "Media",
+      spacing: true,
+      icon: <AiFillShopping />,
+      to: "#",
+    },
     {
       title: "Management",
       submenu: true,
+      icon: <MdManageAccounts />,
+      to: "#",
       submenuItems: [
-        { title: "Categories" },
-        { title: "Products" },
-        { title: "Brands" },
-        { title: "Orders" },
+        { title: "Categories", to: "/admin/category" },
+        { title: "Products", to: "/admin/product" },
+        { title: "Brand", to: "/admin/brand" },
+        { title: "Orders", to: "/admin/dashboard" },
       ],
     },
-    { title: "Analytics" },
-    { title: "Inbox", spacing: true },
-    { title: "Settings" },
-    { title: "Logout" },
+    { title: "Analytics", to: "#", icon: <SiSimpleanalytics /> },
+    { title: "Inbox", spacing: true, to: "#", icon: <AiOutlineInbox /> },
+    { title: "Settings", to: "#", icon: <AiOutlineSetting /> },
+    { title: "Logout", to: "#", icon: <IoLogOutOutline /> },
   ];
   return (
     <>
       <div
-        className={`bg-dark-purple h-screen p-5 pt-8 relative duration-500 ${
+        className={`bg-dark-purple h-screen p-5 pt-8 absolute z-10 float-left duration-500 ${
           open ? "w-72" : "w-20"
         }  `}
       >
@@ -37,7 +64,7 @@ const Sidebar = () => {
           className={`bg-white text-dark-purple text-3xl rounded-full absolute -right-3 top-9 border-[1px] border-dark-purple ${
             !open && "rotate-180"
           }`}
-          onClick={() => setOpen(!open)}
+          onClick={() => dispatch(openSidebar())}
         />
         <div className="inline-flex">
           <AiFillEnvironment
@@ -62,27 +89,27 @@ const Sidebar = () => {
                   item.spacing ? "mt-9" : "mt-2"
                 }`}
               >
-                <span className="text-2xl block float-left">
-                  <RiDashboardFill />
-                </span>
-                <span
-                  className={`text-base font-medium flex-1 duration-200 ${
-                    !open && " hidden"
+                <span className="text-2xl block float-left">{item.icon}</span>
+                <Link
+                  className={`text-base font-medium flex-1 duration-200 origin-left ${
+                    !open && "scale-0"
                   }`}
+                  to={item.to}
+                  onClick={item.submenu ? () => dispatch(openSubMenu()) : ""}
                 >
                   {item.title}
-                </span>
+                </Link>
                 {item.submenu && open && (
                   <BsChevronDown
-                    className={`${submenuOpen && "rotate-[180deg]"}`}
+                    className={`${openSubMenuItem && "rotate-[180deg]"}`}
                     onClick={() => {
-                      setSubMenu(!submenuOpen);
+                      dispatch(openSubMenu());
                     }}
                   />
                 )}
               </li>
-              {item.submenu && submenuOpen && open && (
-                <ul className="duration-200">
+              {item.submenu && openSubMenuItem && open && (
+                <ul className={`duration-500`}>
                   {item.submenuItems.map((submenuItem, index) => {
                     return (
                       <li
@@ -91,7 +118,7 @@ const Sidebar = () => {
                           item.spacing ? "mt-9" : "mt-2"
                         }`}
                       >
-                        {submenuItem.title}
+                        <Link to={submenuItem.to}>{submenuItem.title}</Link>
                       </li>
                     );
                   })}

@@ -2,43 +2,47 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const userSchema = mongoose.Schema({
-  email: {
-    type: String,
-    required: [true, "Please provide an email"],
-    unique: true,
-  },
-  username: {
-    type: String,
-    required: [true, "Please provide an username"],
-  },
-  password: {
-    type: String,
-    require: [true, "Please enter a password"],
-    minlength: 6,
-    select: false,
-  },
-  cart: [
-    {
-      product_id: { type: mongoose.Types.ObjectId, ref: "product" },
-      quantity: Number,
+const { timeStamp } = require("console");
+const userSchema = mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: [true, "Please provide an email"],
+      unique: true,
     },
-  ],
-  orders: [
-    {
-      product_id: { type: mongoose.Types.ObjectId, ref: "product" },
-      quantity: Number,
-      total: Number,
+    username: {
+      type: String,
+      required: [true, "Please provide an username"],
     },
-  ],
-  confirmed: {
-    type: Boolean,
+    password: {
+      type: String,
+      require: [true, "Please enter a password"],
+      minlength: 6,
+      select: false,
+    },
+    cart: [
+      {
+        product_id: { type: mongoose.Types.ObjectId, ref: "product" },
+        quantity: Number,
+      },
+    ],
+    orders: [
+      {
+        product_id: { type: mongoose.Types.ObjectId, ref: "product" },
+        quantity: Number,
+        total: Number,
+      },
+    ],
+    confirmed: {
+      type: Boolean,
+    },
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
+    confirmRegistrationToken: String,
+    confirmRegistrationExpire: Date,
   },
-  resetPasswordToken: String,
-  resetPasswordExpire: Date,
-  confirmRegistrationToken: String,
-  confirmRegistrationExpire: Date,
-});
+  { timeStamp: true }
+);
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
