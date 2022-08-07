@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import { BsArrowLeftShort, BsChevronDown, BsFillBagFill } from "react-icons/bs";
 import {
   AiFillEnvironment,
@@ -18,7 +17,7 @@ import { openSidebar, openSubMenu } from "../features/admin/adminSidebarSlice";
 const Sidebar = () => {
   const { open, openSubMenuItem } = useSelector((state) => state.sidebar);
   const dispatch = useDispatch();
-  const [submenuOpen, setSubMenu] = useState(false);
+
   const Menus = [
     {
       title: "Dashboard",
@@ -56,7 +55,7 @@ const Sidebar = () => {
   return (
     <>
       <div
-        className={`bg-dark-purple h-screen p-5 pt-8 absolute z-10 float-left duration-500 ${
+        className={`bg-dark-purple h-screen p-5 pt-8 absolute z-20 float-left duration-500 ${
           open ? "w-72" : "w-20"
         }  `}
       >

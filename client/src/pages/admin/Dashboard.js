@@ -1,9 +1,12 @@
 import React from "react";
-import Sidebar from "../../components/Sidebar";
+import SlidebarShade from "../../components/SlidebarShade";
 export const Dashboard = () => {
   return (
-    <div className="flex ml-24 ">
-      <div>Home page</div>
+    <div className="ml-24 w-full h-full">
+      <SlidebarShade />
+      <div className="flex justify-center">
+        <div>test</div>
+      </div>
     </div>
   );
 };

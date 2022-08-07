@@ -1,8 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import adminReducer from "./features/admin/adminSidebarSlice";
+import SidebarReducer from "./features/admin/adminSidebarSlice";
+import ModalReducer from "./features/admin/adminModalSlide";
+import ProductReducer from "./features/admin/productSlice";
 
 export const store = configureStore({
   reducer: {
-    sidebar: adminReducer,
+    sidebar: SidebarReducer,
+    modal: ModalReducer,
+    product: ProductReducer,
   },
 });
