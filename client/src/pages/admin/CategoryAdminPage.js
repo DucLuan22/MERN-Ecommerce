@@ -1,7 +1,7 @@
 import React from "react";
 
 const CategoryAdminPage = () => {
-  return <div>CategoryPage</div>;
+  return <div className="w-full h-full">CategoryPage</div>;
 };
 
 export default CategoryAdminPage;
