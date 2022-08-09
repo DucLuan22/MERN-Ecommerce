@@ -81,9 +81,8 @@ const Sidebar = () => {
         </div>
         <ul>
           {Menus.map((item, index) => (
-            <>
+            <React.Fragment key={index}>
               <li
-                key={index}
                 className={`text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md mt-2 ${
                   item.spacing ? "mt-9" : "mt-2"
                 }`}
@@ -123,7 +122,7 @@ const Sidebar = () => {
                   })}
                 </ul>
               )}
-            </>
+            </React.Fragment>
           ))}
         </ul>
       </div>
