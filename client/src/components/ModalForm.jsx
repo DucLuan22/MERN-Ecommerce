@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeModal, openModal } from "../features/admin/adminModalSlide";
+import { closeModal } from "../features/admin/adminModalSlide";
 import { Modal, Button } from "flowbite-react";
 import { useState } from "react";
 import ModalTextField from "./ModalTextField";
@@ -14,20 +14,9 @@ function ModalForm({ dataModal }) {
   const submitHandling = async (e) => {
     e.preventDefault();
     await dataModal.add(data);
-    await dataModal.get();
   };
   return (
     <>
-      <div className="flex justify-center my-4">
-        <Button
-          className="mx-auto"
-          color="dark"
-          onClick={() => dispatch(openModal())}
-        >
-          Add {dataModal.title}
-        </Button>
-      </div>
-
       <Modal
         show={open}
         onClose={() => dispatch(closeModal())}

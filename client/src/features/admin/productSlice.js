@@ -6,7 +6,7 @@ export const addProduct = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await Axios.post("/admin/product/add", data);
-      return response.data;
+      return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -14,13 +14,44 @@ export const addProduct = createAsyncThunk(
 );
 
 export const getProducts = createAsyncThunk(
-  "product/get",
+  "product/getAll",
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await Axios.get("/admin/product/q");
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const deleteProducts = createAsyncThunk(
+  "product/delete",
+  async (product_id, thunkAPI) => {
+    try {
+      const response = await Axios.delete(
+        `/admin/product/delete/${product_id}`
+      );
+      console.log(response.data.data);
+      return response.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const updateProducts = createAsyncThunk(
+  "product/update",
+  async (data, thunkAPI) => {
+    try {
+      const response = await Axios.put(
+        `/admin/product/update/${data._id}`,
+        data
+      );
+
+      return response.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -37,6 +68,7 @@ const productSlice = createSlice({
   reducers: {
     reset: () => initialState,
   },
+
   extraReducers: (build) => {
     build.addCase(addProduct.pending, (state, action) => {
       state.isLoading = true;
@@ -44,7 +76,7 @@ const productSlice = createSlice({
 
     build.addCase(addProduct.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.products = [...state.products, action.payload];
+      state.products.push(action.payload);
     });
 
     build.addCase(addProduct.rejected, (state, action) => {
@@ -59,12 +91,35 @@ const productSlice = createSlice({
     build.addCase(getProducts.fulfilled, (state, action) => {
       state.isLoading = false;
       state.products = action.payload.data;
-      return state;
     });
 
     build.addCase(getProducts.rejected, (state, action) => {
       state.isLoading = false;
       state.errorMessage = action.payload.message;
+    });
+
+    build.addCase(deleteProducts.pending, (state, action) => {
+      state.isLoading = true;
+    });
+
+    build.addCase(deleteProducts.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.products = state.products.filter(
+        (product) => product._id !== action.payload._id
+      );
+    });
+
+    build.addCase(deleteProducts.rejected, (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload.message;
+    });
+
+    build.addCase(updateProducts.pending, (state, action) => {
+      state.isLoading = true;
+    });
+
+    build.addCase(updateProducts.fulfilled, (state, action) => {
+      state.isLoading = false;
     });
   },
 });
