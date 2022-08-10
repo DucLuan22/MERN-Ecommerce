@@ -1,6 +1,6 @@
 import React from "react";
 import { TextInput, Label } from "flowbite-react";
-const ModalTextField = ({ name, label, type, setData }) => {
+const ModalTextField = ({ name, label, type, setData, value }) => {
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setData((prevState) => ({ ...prevState, [name]: value }));

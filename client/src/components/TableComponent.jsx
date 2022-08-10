@@ -1,7 +1,7 @@
 import React from "react";
 import { Table } from "flowbite-react";
 import ProductTableRow from "./ProductTableRow";
-const TableProduct = ({ tableData, tableHeaders }) => {
+const TableComponent = ({ tableData, tableHeaders }) => {
   return (
     <Table className="font-bold" hoverable={true}>
       <Table.Head>
@@ -13,11 +13,11 @@ const TableProduct = ({ tableData, tableHeaders }) => {
         </Table.HeadCell>
       </Table.Head>
       <Table.Body className="divide-y">
-        {tableData.length !== 0 &&
-          tableData.map((row) => <ProductTableRow {...row} />)}
+        {tableData &&
+          tableData.map((row) => <ProductTableRow key={row._id} data={row} />)}
       </Table.Body>
     </Table>
   );
 };
 
-export default TableProduct;
+export default TableComponent;
