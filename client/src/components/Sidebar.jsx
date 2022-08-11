@@ -55,7 +55,7 @@ const Sidebar = () => {
   return (
     <>
       <div
-        className={`bg-dark-purple h-screen p-5 pt-8 absolute z-20 float-left duration-500 ${
+        className={`bg-dark-purple h-screen p-5 pt-8 absolute z-50 float-left duration-500 ${
           open ? "w-72" : "w-20"
         }  `}
       >
