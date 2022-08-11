@@ -120,6 +120,13 @@ const productSlice = createSlice({
 
     build.addCase(updateProducts.fulfilled, (state, action) => {
       state.isLoading = false;
+      const index = state.products.findIndex(
+        (product) => product._id === action.payload._id
+      );
+      state.products[index] = {
+        ...state.products[index],
+        ...action.payload,
+      };
     });
   },
 });
