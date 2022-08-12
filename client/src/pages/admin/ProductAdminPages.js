@@ -10,13 +10,16 @@ import {
   updateProducts,
 } from "../../features/admin/productSlice";
 import UpdateModalForm from "../../components/UpdateModalForm";
+import { getBrands } from "../../features/admin/brandSlice";
+import { getCategories, getCategory } from "../../features/admin/categorySlice";
 const ProductAdminPage = () => {
   const dispatch = useDispatch();
   // eslint-disable-next-line
   const { isLoading, errorMessage } = useSelector((state) => state.product);
 
   const products = useSelector((state) => state.product.products);
-
+  const { brands } = useSelector((state) => state.brand);
+  const { categories } = useSelector((state) => state.category);
   const { updateData } = useSelector((state) => state.modal);
 
   const ProductModal = {
@@ -48,6 +51,7 @@ const ProductAdminPage = () => {
         name: "category",
         label: "Category",
         type: "select",
+        options: categories,
         valueData: updateData?.category,
       },
       {
@@ -55,6 +59,7 @@ const ProductAdminPage = () => {
         label: "Brand",
         type: "select",
         valueData: updateData?.brand,
+        options: brands,
       },
       {
         name: "stock",
@@ -77,6 +82,8 @@ const ProductAdminPage = () => {
 
   useEffect(() => {
     dispatch(getProducts());
+    dispatch(getBrands());
+    dispatch(getCategories());
   }, [dispatch]);
 
   return (

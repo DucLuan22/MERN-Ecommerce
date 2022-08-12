@@ -8,10 +8,11 @@ import ModalSelectField from "./ModalSelectField";
 
 function ModalForm({ dataModal }) {
   const [data, setData] = useState({});
-  const { isLoading } = useSelector((state) => state.product);
+  const isLoadingProduct = useSelector((state) => state.product.isLoading);
+  const isLoadingBrand = useSelector((state) => state.brand.isLoading);
+  const isLoadingCategory = useSelector((state) => state.category.isLoading);
   const { open } = useSelector((state) => state.modal);
   const dispatch = useDispatch();
-  console.log(data);
   const submitHandling = async (e) => {
     e.preventDefault();
     await dataModal.add(data);
@@ -39,10 +40,12 @@ function ModalForm({ dataModal }) {
           onSubmit={(e) => submitHandling(e)}
         >
           <Modal.Body>
-            {isLoading && (
+            {(isLoadingProduct || isLoadingBrand || isLoadingCategory) && (
               <Spinner aria-label="Extra small spinner example" size="xs" />
             )}
-            {!isLoading &&
+            {!isLoadingProduct &&
+              !isLoadingBrand &&
+              !isLoadingCategory &&
               dataModal.fields.map((field, index) => {
                 if (field.type === "text") {
                   return (
@@ -54,6 +57,7 @@ function ModalForm({ dataModal }) {
                     <ModalSelectField
                       {...field}
                       setData={setData}
+                      options={field.options}
                       key={index}
                     />
                   );

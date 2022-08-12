@@ -4,7 +4,7 @@ import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { openUpdateModal } from "../../features/admin/adminModalSlide";
 import { useDispatch } from "react-redux";
 import { deleteCategory } from "../../features/admin/categorySlice";
-const CategoryTableRow = () => {
+const CategoryTableRow = ({ data }) => {
   const dispatch = useDispatch();
   const deleteHandler = (id) => {
     dispatch(deleteCategory(id));

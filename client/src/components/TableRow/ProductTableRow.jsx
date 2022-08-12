@@ -1,12 +1,19 @@
 import React from "react";
 import { Button, Table } from "flowbite-react";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openUpdateModal } from "../../features/admin/adminModalSlide";
 import { deleteProducts } from "../../features/admin/productSlice";
+import { useEffect } from "react";
+import { getCategory } from "../../features/admin/categorySlice";
 
 const ProductTableRow = ({ data }) => {
   const dispatch = useDispatch();
+  const { category } = useSelector((state) => state.category);
+
+  useEffect(() => {
+    dispatch(getCategory(data.category));
+  }, [dispatch]);
   const deleteHandler = (id) => {
     dispatch(deleteProducts(id));
   };
@@ -17,7 +24,7 @@ const ProductTableRow = ({ data }) => {
         {data.name}
       </Table.Cell>
       <Table.Cell>{data.stock}</Table.Cell>
-      <Table.Cell>{data.category}</Table.Cell>
+      <Table.Cell>{category.data.name}</Table.Cell>
       <Table.Cell>{data.brand}</Table.Cell>
       <Table.Cell>{data.price}</Table.Cell>
       <Table.Cell className="flex gap-1">

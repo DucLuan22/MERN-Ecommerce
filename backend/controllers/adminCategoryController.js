@@ -1,5 +1,5 @@
 const Category = require("../models/Category");
-
+const ErrorResponse = require("../utils/errorResponse");
 exports.addCategory = async (req, res, next) => {
   try {
     const data = await Category.create({
