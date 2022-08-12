@@ -28,16 +28,28 @@ export const getCategories = createAsyncThunk(
 
 export const deleteCategory = createAsyncThunk(
   "category/delete",
-  async (brand_id, thunkAPI) => {
+  async (category_id, thunkAPI) => {
     try {
       const response = await Axios.delete(
-        `/admin/category/delete/${brand_id}`,
-        brand_id
+        `/admin/category/delete/${category_id}`,
+        category_id
       );
       console.log(response.data.data);
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const getCategory = createAsyncThunk(
+  "category/getOne",
+  async (category_id, { rejectWithValue }) => {
+    try {
+      const { data } = await Axios.get(`/admin/category/q/${category_id}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -62,6 +74,7 @@ const initialState = {
   isLoading: false,
   errorMessage: "",
   categories: [],
+  category: {},
 };
 
 const categorySlice = createSlice({
@@ -115,6 +128,11 @@ const categorySlice = createSlice({
 
     build.addCase(updateCategory.pending, (state, action) => {
       state.isLoading = true;
+    });
+
+    build.addCase(getCategory.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.category = action.payload;
     });
 
     build.addCase(updateCategory.fulfilled, (state, action) => {

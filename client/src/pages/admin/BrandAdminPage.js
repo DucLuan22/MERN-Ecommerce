@@ -13,6 +13,8 @@ import {
 const BrandAdminPage = () => {
   const dispatch = useDispatch();
   const { brands } = useSelector((state) => state.brand);
+  const { updateData } = useSelector((state) => state.modal);
+
   useEffect(() => {
     dispatch(getBrands());
   }, [dispatch]);
@@ -22,6 +24,9 @@ const BrandAdminPage = () => {
     add: function (data) {
       dispatch(addBrand(data));
     },
+    get: function () {
+      dispatch(getBrands());
+    },
     update: function (data) {
       dispatch(updateBrand(data));
     },
@@ -30,6 +35,7 @@ const BrandAdminPage = () => {
         name: "name",
         label: "Brand Name",
         type: "text",
+        valueData: updateData?.name,
       },
     ],
   };

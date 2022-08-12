@@ -2,6 +2,7 @@ import React from "react";
 import { Table } from "flowbite-react";
 import ProductTableRow from "./TableRow/ProductTableRow";
 import BrandTableRow from "./TableRow/BrandTableRow";
+import CategoryTableRow from "./TableRow/CategoryTableRow";
 const TableComponent = ({ tableData, tableHeaders, tableType }) => {
   return (
     <Table className="font-bold" hoverable={true}>
@@ -18,6 +19,8 @@ const TableComponent = ({ tableData, tableHeaders, tableType }) => {
           tableData.map((row) => <ProductTableRow key={row._id} data={row} />)}
         {tableType === "brand" &&
           tableData.map((row) => <BrandTableRow key={row._id} data={row} />)}
+        {tableType === "category" &&
+          tableData.map((row) => <CategoryTableRow key={row._id} data={row} />)}
       </Table.Body>
     </Table>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import { Label, Select } from "flowbite-react";
-const ModalSelectField = ({ name, label, setData }) => {
+const ModalSelectField = ({ name, label, setData, options }) => {
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setData((prevState) => ({ ...prevState, [name]: value }));
@@ -12,7 +12,11 @@ const ModalSelectField = ({ name, label, setData }) => {
       </div>
       <Select name={name} required={true} onChange={onChangeHandler}>
         <option defaultChecked>Select {label}</option>
-        <option value={1}>United States</option>
+        {options.map((option) => (
+          <option key={option._id} value={option._id}>
+            {option.name}
+          </option>
+        ))}
       </Select>
     </div>
   );
