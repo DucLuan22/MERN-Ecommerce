@@ -23,6 +23,7 @@ exports.updateBrand = async (req, res, next) => {
       return next(new ErrorResponse("Can't find any brand", 400));
     }
     res.status(200).json({ success: true, data });
+    res.send();
   } catch (error) {
     next(error);
   }
@@ -41,6 +42,7 @@ exports.getBrand = async (req, res, next) => {
     next(error);
   }
 };
+
 exports.getBrands = async (req, res, next) => {
   try {
     const data = await Brand.find({});

@@ -38,7 +38,7 @@ const Confirmation = () => {
           {success && (
             <IoMdCheckmarkCircle className="text-[150px] text-green-400 relative duration-500 animate-pulse" />
           )}
-          {error && (
+          {error && !success && (
             <MdError className="text-[150px] text-red-700 relative duration-500 animate-pulse" />
           )}
         </span>
