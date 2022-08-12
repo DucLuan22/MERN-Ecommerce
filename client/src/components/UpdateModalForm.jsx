@@ -5,23 +5,15 @@ import { Modal, Button } from "flowbite-react";
 import { useState } from "react";
 import ModalTextField from "./ModalTextField";
 import ModalSelectField from "./ModalSelectField";
-import { useEffect } from "react";
 const UpdateModalForm = ({ dataModal }) => {
+  const [data, setData] = useState({});
   const { updateOpen, updateData } = useSelector((state) => state.modal);
-  const [data, setData] = useState(updateData);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (updateData !== undefined) {
-      setData(updateData);
-    }
-  }, [updateData]);
-
-  const submitHandling = (e) => {
-    e.preventDefault();
-    dataModal.update(data);
-  };
-
+  // const submitHandling = async (e) => {
+  //   e.preventDefault();
+  //   await dataModal.add(data);
+  // };
   return (
     <>
       <Modal
@@ -30,22 +22,37 @@ const UpdateModalForm = ({ dataModal }) => {
         className="fixed"
       >
         <Modal.Header>Update {dataModal.title}</Modal.Header>
-        <form className="flex flex-col gap-4" onSubmit={submitHandling}>
+        <form className="flex flex-col gap-4">
           <Modal.Body>
             {dataModal.fields.map((field, index) => {
               if (field.type === "text") {
                 return (
-                  <ModalTextField key={index} {...field} setData={setData} />
+                  <ModalTextField
+                    key={index}
+                    {...field}
+                    setData={setData}
+                    value={updateData}
+                  />
                 );
               }
               if (field.type === "select") {
                 return (
-                  <ModalSelectField {...field} setData={setData} key={index} />
+                  <ModalSelectField
+                    {...field}
+                    setData={setData}
+                    key={index}
+                    value={updateData}
+                  />
                 );
               }
               if (field.type === "number") {
                 return (
-                  <ModalTextField key={index} {...field} setData={setData} />
+                  <ModalTextField
+                    key={index}
+                    {...field}
+                    setData={setData}
+                    value={updateData}
+                  />
                 );
               }
               return <React.Fragment key={index} />;

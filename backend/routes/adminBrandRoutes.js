@@ -15,6 +15,6 @@ router.get("/q/:brand_id", getBrand);
 
 router.put("/update/:brand_id", updateBrand);
 
-router.delete("/delete/:brand_id", deleteBrand);
+router.delete("/delete", deleteBrand);
 
 module.exports = router;

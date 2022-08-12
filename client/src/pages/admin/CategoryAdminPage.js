@@ -18,6 +18,7 @@ const CategoryAdminPage = () => {
   useEffect(() => {
     dispatch(getCategories());
   }, [dispatch]);
+
   const CategoryModal = {
     title: "Category",
     add: function (data) {
