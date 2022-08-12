@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { TextInput, Label } from "flowbite-react";
-const ModalTextField = ({ name, label, type, setData, value }) => {
+import { useEffect } from "react";
+const ModalTextField = ({ name, label, type, setData, valueData }) => {
+  const [valueField, setValueField] = useState("");
+
+  useEffect(() => {
+    if (valueData !== undefined) {
+      setValueField(valueData);
+    }
+  }, [valueData]);
+
   const onChangeHandler = (e) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
+    setValueField(value);
     setData((prevState) => ({ ...prevState, [name]: value }));
   };
 
@@ -18,6 +28,7 @@ const ModalTextField = ({ name, label, type, setData, value }) => {
         required={true}
         shadow={true}
         onChange={onChangeHandler}
+        value={valueField}
       />
     </div>
   );
