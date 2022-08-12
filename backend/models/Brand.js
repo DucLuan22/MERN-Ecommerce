@@ -4,4 +4,4 @@ const brandSchema = mongoose.Schema({
   name: { type: String, required: true },
 });
 
-module.exports = mongoose.model("brand", brandSchema);
+module.exports = brandSchema;
