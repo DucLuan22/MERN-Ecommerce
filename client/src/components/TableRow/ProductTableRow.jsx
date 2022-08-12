@@ -2,8 +2,9 @@ import React from "react";
 import { Button, Table } from "flowbite-react";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { deleteProducts } from "../features/admin/productSlice";
-import { openUpdateModal } from "../features/admin/adminModalSlide";
+import { openUpdateModal } from "../../features/admin/adminModalSlide";
+import { deleteProducts } from "../../features/admin/productSlice";
+
 const ProductTableRow = ({ data }) => {
   const dispatch = useDispatch();
   const deleteHandler = (id) => {

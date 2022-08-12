@@ -23,8 +23,8 @@ const server = app.listen(PORT, () => {
 //Routes
 app.use("/api/auth", require("./routes/authUserRoutes"));
 app.use("/admin/product/", require("./routes/adminProductRoutes"));
-app.use("/admin/category", require("./routes/adminCategoryRoutes"));
-app.use("/admin/brand", require("./routes/adminBrandRoutes"));
+app.use("/admin/category/", require("./routes/adminCategoryRoutes"));
+app.use("/admin/brand/", require("./routes/adminBrandRoutes"));
 
 //ErrorHandler
 app.use(ErrorHandler);
