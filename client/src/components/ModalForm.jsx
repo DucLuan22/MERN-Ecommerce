@@ -11,7 +11,7 @@ function ModalForm({ dataModal }) {
   const { isLoading } = useSelector((state) => state.product);
   const { open } = useSelector((state) => state.modal);
   const dispatch = useDispatch();
-
+  console.log(data);
   const submitHandling = async (e) => {
     e.preventDefault();
     await dataModal.add(data);
