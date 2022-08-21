@@ -8,14 +8,18 @@ import ModalSelectField from "./ModalSelectField";
 import { useEffect } from "react";
 const UpdateModalForm = ({ dataModal }) => {
   const { updateOpen, updateData } = useSelector((state) => state.modal);
-  const [data, setData] = useState(updateData);
+  const [data, setData] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (updateData !== undefined) {
       setData(updateData);
     }
-  }, [updateData]);
+
+    if (updateOpen === false) {
+      setData("");
+    }
+  }, [updateData, updateOpen]);
 
   const submitHandling = (e) => {
     e.preventDefault();

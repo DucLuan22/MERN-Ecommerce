@@ -5,6 +5,7 @@ import { Modal, Button, Spinner } from "flowbite-react";
 import { useState } from "react";
 import ModalTextField from "./ModalTextField";
 import ModalSelectField from "./ModalSelectField";
+import ModalFileField from "./ModalFileField";
 
 function ModalForm({ dataModal }) {
   const [data, setData] = useState({});
@@ -43,6 +44,7 @@ function ModalForm({ dataModal }) {
             {(isLoadingProduct || isLoadingBrand || isLoadingCategory) && (
               <Spinner aria-label="Extra small spinner example" size="xs" />
             )}
+
             {!isLoadingProduct &&
               !isLoadingBrand &&
               !isLoadingCategory &&
@@ -65,6 +67,11 @@ function ModalForm({ dataModal }) {
                 if (field.type === "number") {
                   return (
                     <ModalTextField key={index} {...field} setData={setData} />
+                  );
+                }
+                if (field.type === "file") {
+                  return (
+                    <ModalFileField key={index} {...field} setData={setData} />
                   );
                 }
                 return <React.Fragment key={index} />;

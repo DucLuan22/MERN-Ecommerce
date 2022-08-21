@@ -42,6 +42,18 @@ export const deleteBrand = createAsyncThunk(
   }
 );
 
+export const getBrand = createAsyncThunk(
+  "brand/getOne",
+  async (category_id, { rejectWithValue }) => {
+    try {
+      const { data } = await Axios.get(`/admin/brand/q/${category_id}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const updateBrand = createAsyncThunk(
   "brand/update",
   async (data, thunkAPI) => {
@@ -59,6 +71,7 @@ const initialState = {
   isLoading: false,
   errorMessage: "",
   brands: [],
+  brand: {},
 };
 
 const brandSlice = createSlice({
@@ -123,6 +136,20 @@ const brandSlice = createSlice({
         ...state.brands[index],
         ...action.payload,
       };
+    });
+
+    build.addCase(getBrand.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.brand = action.payload;
+    });
+
+    build.addCase(getBrand.pending, (state, action) => {
+      state.isLoading = true;
+    });
+
+    build.addCase(getBrand.rejected, (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload.message;
     });
   },
 });

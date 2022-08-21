@@ -68,6 +68,11 @@ const ProductAdminPage = () => {
         min: 0,
         valueData: updateData?.stock,
       },
+      {
+        name: "image",
+        label: "Upload Product Image",
+        type: "file",
+      },
     ],
   };
 
