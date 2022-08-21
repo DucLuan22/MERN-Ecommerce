@@ -3,7 +3,6 @@ import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 
 const CartItem = () => {
   const [quantity, setQuantity] = useState(1);
-  console.log(quantity);
   const increment = () => {
     setQuantity(quantity + 1);
   };

@@ -22,9 +22,6 @@ const Cart = () => {
               </thead>
               <tbody className="">
                 <CartItem />
-                <CartItem />
-                <CartItem />
-                <CartItem />
               </tbody>
             </table>
           </div>

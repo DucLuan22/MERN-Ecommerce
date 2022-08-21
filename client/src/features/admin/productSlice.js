@@ -5,7 +5,15 @@ export const addProduct = createAsyncThunk(
   "product/post",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await Axios.post("/admin/product/add", data);
+      const postData = new FormData();
+      postData.append("image", data.image);
+      postData.append("price", data.price);
+      postData.append("name", data.name);
+      postData.append("stock", data.stock);
+      postData.append("brand", data.brand);
+      postData.append("category", data.category);
+
+      const response = await Axios.post("/admin/product/add", postData);
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -32,7 +40,6 @@ export const deleteProducts = createAsyncThunk(
       const response = await Axios.delete(
         `/admin/product/delete/${product_id}`
       );
-      console.log(response.data.data);
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -48,7 +55,6 @@ export const updateProducts = createAsyncThunk(
         `/admin/product/update/${data._id}`,
         data
       );
-
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);

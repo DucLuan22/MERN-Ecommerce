@@ -5,6 +5,7 @@ exports.addProduct = async (req, res, next) => {
   try {
     const data = await Product.create({
       ...req.body,
+      img: req.file.filename,
     });
     res.status(200).json({ data });
   } catch (error) {
