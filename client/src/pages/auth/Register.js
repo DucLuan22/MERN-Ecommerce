@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Axios from "../../configs/axiosConfig";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../features/auth/authSlice";
 const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -8,8 +9,11 @@ const Register = () => {
   const [confirm_password, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const registerHandler = async (e) => {
+  const dispatch = useDispatch();
+  const { isSuccess, errorMessage } = useSelector((state) => state.auth);
+  const registerHandler = (e) => {
     e.preventDefault();
+
     if (password !== confirm_password) {
       setPassword("");
       setConfirmPassword("");
@@ -18,23 +22,21 @@ const Register = () => {
       }, 5000);
       return setError("Passwords do not match");
     }
-    try {
-      const { data } = await Axios.post("/api/auth/register", {
-        username,
-        email,
-        password,
-      });
-      if (data) {
-        setSuccess(data);
-        setTimeout(() => {
-          setSuccess("");
-        }, 10000);
-      }
-    } catch (error) {
-      setError(error.response.data.error);
+
+    dispatch(register({ username, email, password }));
+
+    if (errorMessage) {
+      setError(errorMessage);
       setTimeout(() => {
         setError("");
       }, 5000);
+    }
+
+    if (isSuccess.success && !errorMessage) {
+      setSuccess(isSuccess.data);
+      setTimeout(() => {
+        setSuccess("");
+      }, 10000);
     }
   };
 
@@ -51,7 +53,7 @@ const Register = () => {
         )}
         {success && (
           <div className="text-center bg-green-400 rounded-lg p-2 opacity-70 top-36 w-[500px] absolute">
-            <h1>{success.data}</h1>
+            <h1>{success}</h1>
           </div>
         )}
         <h1 className="text-center text-3xl font-bold my-5">Sign Up</h1>
@@ -119,7 +121,7 @@ const Register = () => {
             <input
               type="password"
               className="border-[1px] border-gray-400 h-10 rounded-lg p-2"
-              placeholder="Enter vonfirmed password"
+              placeholder="Enter confirmed password"
               autoComplete="off"
               required
               value={confirm_password}
