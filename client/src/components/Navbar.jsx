@@ -1,9 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineShoppingCart, AiOutlineMenu } from "react-icons/ai";
-
+import { useDispatch, useSelector } from "react-redux";
+import { Dropdown, Avatar } from "flowbite-react";
+import { useNavigate } from "react-router-dom";
+import { reset, verifyToken } from "../features/auth/authSlice";
 function Navbar() {
   const [isDrop, setIsDrop] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const token = localStorage.getItem("authToken");
+  const { loggedUser } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    const fetchPrivateData = async () => {
+      await dispatch(verifyToken());
+    };
+    if (token) {
+      fetchPrivateData();
+    }
+  }, [dispatch, token]);
+
   return (
     <nav className="shadow-md w-screen fixed top-0 left-0 z-10">
       <div className="md:flex items-center justify-around bg-white py-4 md:px-10 px-7">
@@ -36,9 +53,43 @@ function Navbar() {
               0
             </span>
           </li>
-          <button className="bg-gray-900 text-white py-2 px-6 font-semibold rounded md:ml-8 hover:bg-slate-700 duration-500">
-            <Link to="/auth/login">Login</Link>
-          </button>
+          {localStorage.getItem("authToken") ? (
+            <Dropdown
+              label={
+                <Avatar
+                  alt="User settings"
+                  img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                  rounded={true}
+                />
+              }
+              arrowIcon={false}
+              inline={true}
+            >
+              <Dropdown.Header>
+                <span className="block text-sm">{loggedUser.username}</span>
+                <span className="block truncate text-sm font-medium">
+                  {loggedUser.email}
+                </span>
+              </Dropdown.Header>
+              <Dropdown.Item>Dashboard</Dropdown.Item>
+              <Dropdown.Item>Settings</Dropdown.Item>
+              <Dropdown.Item>Earnings</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item
+                onClick={() => {
+                  localStorage.removeItem("authToken");
+                  navigate("auth/login/");
+                  dispatch(reset());
+                }}
+              >
+                Sign out
+              </Dropdown.Item>
+            </Dropdown>
+          ) : (
+            <button className="bg-gray-900 text-white py-2 px-6 font-semibold rounded md:ml-8 hover:bg-slate-700 duration-500">
+              <Link to="/auth/login">Login</Link>
+            </button>
+          )}
         </ul>
       </div>
     </nav>
