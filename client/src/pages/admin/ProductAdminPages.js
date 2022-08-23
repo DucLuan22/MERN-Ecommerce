@@ -9,13 +9,16 @@ import {
   getProducts,
   updateProducts,
 } from "../../features/admin/productSlice";
+import { Spinner } from "flowbite-react";
 import UpdateModalForm from "../../components/UpdateModalForm";
 import { getBrands } from "../../features/admin/brandSlice";
-import { getCategories, getCategory } from "../../features/admin/categorySlice";
+import { getCategories } from "../../features/admin/categorySlice";
 const ProductAdminPage = () => {
   const dispatch = useDispatch();
   // eslint-disable-next-line
-  const { isLoading, errorMessage } = useSelector((state) => state.product);
+  const productLoading = useSelector((state) => state.product.isLoading);
+  const categoryLoading = useSelector((state) => state.category.isLoading);
+  const brandLoading = useSelector((state) => state.brand.isLoading);
 
   const products = useSelector((state) => state.product.products);
   const { brands } = useSelector((state) => state.brand);
@@ -91,6 +94,9 @@ const ProductAdminPage = () => {
     dispatch(getCategories());
   }, [dispatch]);
 
+  if (brandLoading || productLoading || categoryLoading) {
+    return <Spinner color="info" aria-label="Info spinner example" />;
+  }
   return (
     <div className="ml-24 w-full h-full">
       <SlidebarShade />

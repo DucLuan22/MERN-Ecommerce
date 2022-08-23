@@ -24,13 +24,9 @@ const Pagination = ({ data }) => {
   return (
     <>
       <section className="shadow-lg md:w-4/5 mx-auto">
-        <div className="flex flex-wrap md:flex-row  justify-evenly p-[10px]">
+        <div className="flex flex-wrap md:flex-row justify-start gap-5 p-[10px]">
           {currentItems.map((data) => {
-            return (
-              <div>
-                <ProductCard title={data.title} />
-              </div>
-            );
+            return <ProductCard key={data._id} data={data} />;
           })}
         </div>
         <ReactPaginate
