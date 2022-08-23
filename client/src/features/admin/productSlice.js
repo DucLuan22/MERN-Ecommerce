@@ -13,8 +13,20 @@ export const addProduct = createAsyncThunk(
       postData.append("brand", data.brand);
       postData.append("category", data.category);
 
-      const response = await Axios.post("/admin/product/add", postData);
+      const response = await Axios.post("/api/product/add", postData);
       return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const getProduct = createAsyncThunk(
+  "product/getOne",
+  async (product_id, { rejectWithValue }) => {
+    try {
+      const { data } = await Axios.get(`/api/product/q/${product_id}`);
+      return data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -25,7 +37,7 @@ export const getProducts = createAsyncThunk(
   "product/getAll",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await Axios.get("/admin/product/q");
+      const { data } = await Axios.get("/api/product/q");
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -37,9 +49,7 @@ export const deleteProducts = createAsyncThunk(
   "product/delete",
   async (product_id, thunkAPI) => {
     try {
-      const response = await Axios.delete(
-        `/admin/product/delete/${product_id}`
-      );
+      const response = await Axios.delete(`/api/product/delete/${product_id}`);
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -51,10 +61,7 @@ export const updateProducts = createAsyncThunk(
   "product/update",
   async (data, thunkAPI) => {
     try {
-      const response = await Axios.put(
-        `/admin/product/update/${data._id}`,
-        data
-      );
+      const response = await Axios.put(`/api/product/update/${data._id}`, data);
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -66,6 +73,7 @@ const initialState = {
   isLoading: false,
   errorMessage: "",
   products: [],
+  product: {},
 };
 
 const productSlice = createSlice({
@@ -133,6 +141,20 @@ const productSlice = createSlice({
         ...state.products[index],
         ...action.payload,
       };
+    });
+
+    build.addCase(getProduct.pending, (state, action) => {
+      state.isLoading = true;
+    });
+
+    build.addCase(getProduct.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.product = action.payload.data;
+    });
+
+    build.addCase(getProduct.rejected, (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload.message;
     });
   },
 });

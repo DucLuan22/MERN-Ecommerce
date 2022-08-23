@@ -110,14 +110,16 @@ const Sidebar = () => {
                 <ul className={`duration-500`}>
                   {item.submenuItems.map((submenuItem, index) => {
                     return (
-                      <li
-                        key={index}
-                        className={`text-gray-300 text-sm px-5 flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md mt-2 ${
-                          item.spacing ? "mt-9" : "mt-2"
-                        }`}
-                      >
-                        <Link to={submenuItem.to}>{submenuItem.title}</Link>
-                      </li>
+                      <Link to={submenuItem.to}>
+                        <li
+                          key={index}
+                          className={`text-gray-300 text-sm px-5 flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md mt-2 ${
+                            item.spacing ? "mt-9" : "mt-2"
+                          }`}
+                        >
+                          {submenuItem.title}
+                        </li>
+                      </Link>
                     );
                   })}
                 </ul>

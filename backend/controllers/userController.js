@@ -5,7 +5,6 @@ exports.getUserLogin = async (req, res, next) => {
   try {
     const id = req.user._id;
     const user = await User.findById(id);
-    console.log(user);
     if (!user) {
       return next(new ErrorResponse("Invalid Token", 400));
     }

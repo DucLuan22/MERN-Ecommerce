@@ -5,26 +5,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { openUpdateModal } from "../../features/admin/adminModalSlide";
 import { deleteProducts } from "../../features/admin/productSlice";
 import { useEffect } from "react";
-import { getCategory } from "../../features/admin/categorySlice";
-import { getBrand } from "../../features/admin/brandSlice";
+import { useState } from "react";
 
 const ProductTableRow = ({ data }) => {
   const dispatch = useDispatch();
-  const { category, isLoading } = useSelector((state) => state.category);
-  const { brand } = useSelector((state) => state.brand);
+  const { brands } = useSelector((state) => state.brand);
+  const { categories } = useSelector((state) => state.category);
+  const [filteredBrand, setFilteredBrand] = useState({});
+  const [filteredCategory, setFilteredCategory] = useState({});
   useEffect(() => {
-    dispatch(getCategory(data.category));
-    dispatch(getBrand(data.brand));
+    setFilteredBrand(...brands.filter((brand) => brand._id === data.brand));
+    setFilteredCategory(
+      ...categories.filter((category) => category._id === data.category)
+    );
     // eslint-disable-next-line
-  }, [dispatch, isLoading]);
+  }, []);
 
   const deleteHandler = (id) => {
     dispatch(deleteProducts(id));
   };
-
-  if (!category.data || !brand.data) {
-    return <Table.Row></Table.Row>;
-  }
   return (
     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
       <Table.Cell>
@@ -38,8 +37,9 @@ const ProductTableRow = ({ data }) => {
         {data.name}
       </Table.Cell>
       <Table.Cell>{data.stock}</Table.Cell>
-      <Table.Cell>{category.data.name}</Table.Cell>
-      <Table.Cell>{brand.data.name}</Table.Cell>
+
+      <Table.Cell>{filteredBrand.name}</Table.Cell>
+      <Table.Cell>{filteredCategory.name}</Table.Cell>
       <Table.Cell>{data.price}</Table.Cell>
       <Table.Cell className="flex gap-1">
         <Button color="dark">

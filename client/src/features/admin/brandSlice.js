@@ -5,7 +5,7 @@ export const addBrand = createAsyncThunk(
   "brand/post",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await Axios.post("admin/brand/add", data);
+      const response = await Axios.post("api/brand/add", data);
       return response.data.data;
     } catch (error) {
       console.log(error);
@@ -18,7 +18,7 @@ export const getBrands = createAsyncThunk(
   "brand/getAll",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await Axios.get("/admin/brand/q");
+      const { data } = await Axios.get("/api/brand/q");
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -31,7 +31,7 @@ export const deleteBrand = createAsyncThunk(
   async (brand_id, thunkAPI) => {
     try {
       const response = await Axios.delete(
-        `/admin/brand/delete/${brand_id}`,
+        `/api/brand/delete/${brand_id}`,
         brand_id
       );
       console.log(response.data.data);
@@ -46,7 +46,7 @@ export const getBrand = createAsyncThunk(
   "brand/getOne",
   async (category_id, { rejectWithValue }) => {
     try {
-      const { data } = await Axios.get(`/admin/brand/q/${category_id}`);
+      const { data } = await Axios.get(`/api/brand/q/${category_id}`);
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -58,7 +58,7 @@ export const updateBrand = createAsyncThunk(
   "brand/update",
   async (data, thunkAPI) => {
     try {
-      const response = await Axios.put(`/admin/brand/update/${data._id}`, data);
+      const response = await Axios.put(`/api/brand/update/${data._id}`, data);
 
       return response.data.data;
     } catch (error) {

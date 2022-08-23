@@ -5,7 +5,7 @@ export const addCategory = createAsyncThunk(
   "category/post",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await Axios.post("/admin/category/add", data);
+      const response = await Axios.post("/api/category/add", data);
       return response.data.data;
     } catch (error) {
       console.log(error);
@@ -18,7 +18,7 @@ export const getCategories = createAsyncThunk(
   "category/getAll",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await Axios.get("/admin/category/q");
+      const { data } = await Axios.get("/api/category/q");
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -46,7 +46,7 @@ export const getCategory = createAsyncThunk(
   "category/getOne",
   async (category_id, { rejectWithValue }) => {
     try {
-      const { data } = await Axios.get(`/admin/category/q/${category_id}`);
+      const { data } = await Axios.get(`/api/category/q/${category_id}`);
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -59,7 +59,7 @@ export const updateCategory = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await Axios.put(
-        `/admin/category/update/${data._id}`,
+        `/api/category/update/${data._id}`,
         data
       );
 
