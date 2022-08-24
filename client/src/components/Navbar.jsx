@@ -14,7 +14,7 @@ function Navbar() {
 
   useEffect(() => {
     const fetchPrivateData = async () => {
-      await dispatch(verifyToken());
+      await dispatch(verifyToken()).unwrap();
     };
     if (token) {
       fetchPrivateData();
