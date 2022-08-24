@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 
-const CartItem = () => {
-  const [quantity, setQuantity] = useState(1);
+const CartItem = ({ data }) => {
+  const [quantity, setQuantity] = useState(data.quantity);
   const increment = () => {
     setQuantity(quantity + 1);
   };
@@ -17,12 +17,12 @@ const CartItem = () => {
       <th className="flex my-5 ">
         <img
           className="w-36 object-contain"
-          src="https://surfacecu.com.vn/wp-content/uploads/2021/04/surface-laptop-go-02.jpg"
+          src={require(`../Images/${data.img}`)}
           alt="itemname"
         />
         <div className="flex flex-col gap-y-3">
           <label className="text-[#3A3A3A]" htmlFor="itemName">
-            Laptop Go Intelsdafasdfafasdfs dsafasdfsadfasdfdsa dasfdsafsadfdsafa
+            {data.name}
           </label>
           <a className="text-[#AAAAAA] w-4" href="http://localhost:3000/cart">
             Remove
@@ -39,6 +39,7 @@ const CartItem = () => {
             min={1}
             value={quantity}
             className="[appearance:textfield] border-[1px] border-gray-500 rounded-xl w-16 h-11 text-center"
+            readOnly
           />
           <i>
             <AiOutlineMinus onClick={() => decrement()} />
@@ -46,10 +47,10 @@ const CartItem = () => {
         </div>
       </th>
       <th className="hidden md:table-cell">
-        <h3 className="mb-9">$12345</h3>
+        <h3 className="mb-9">${data.price}</h3>
       </th>
       <th className="hidden md:table-cell">
-        <h3 className="mb-9">$12345</h3>
+        <h3 className="mb-9">${data.price * quantity}</h3>
       </th>
     </tr>
   );
