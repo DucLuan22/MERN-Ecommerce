@@ -10,7 +10,7 @@ function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = localStorage.getItem("authToken");
-  const { loggedUser } = useSelector((state) => state.auth);
+  const { loggedUser, isLoading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchPrivateData = async () => {
@@ -50,7 +50,9 @@ function Navbar() {
               <AiOutlineShoppingCart className="inline text-2xl" />
             </Link>
             <span className="bg-gray-800 text-white absolute cart-notify bottom-4 left-3 text-sm px-[7px] p-[1px] font-bold">
-              0
+              {!isLoading && loggedUser.cart.length > 0
+                ? loggedUser.cart.length
+                : 0}
             </span>
           </li>
           {localStorage.getItem("authToken") ? (
@@ -71,7 +73,7 @@ function Navbar() {
                   {loggedUser.email}
                 </span>
               </Dropdown.Header>
-              <Dropdown.Item>Dashboard</Dropdown.Item>
+              <Dropdown.Item>Wishlist</Dropdown.Item>
               <Dropdown.Item>Settings</Dropdown.Item>
               <Dropdown.Item>Earnings</Dropdown.Item>
               <Dropdown.Divider />
