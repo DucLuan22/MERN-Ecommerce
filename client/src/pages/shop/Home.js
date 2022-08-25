@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import Pagination from "../../components/Pagination";
-import { getProducts } from "../../features/admin/productSlice";
 import { Spinner } from "flowbite-react";
 
 const Home = () => {
-  const dispatch = useDispatch();
   const { isLoading, products } = useSelector((state) => state.product);
-  useEffect(() => {
-    dispatch(getProducts());
-  }, []);
-
   return (
     <main className=" w-screen mt-21">
       {/* Slider */}

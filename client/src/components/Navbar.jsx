@@ -4,22 +4,61 @@ import { AiOutlineShoppingCart, AiOutlineMenu } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Dropdown, Avatar } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
-import { reset, verifyToken } from "../features/auth/authSlice";
+import { reset } from "../features/auth/authSlice";
+import { useRef } from "react";
+import { getProducts } from "../features/admin/productSlice";
+import { setCart, setTotal, setTotalAmount } from "../features/shop/cartSlice";
+
 function Navbar() {
   const [isDrop, setIsDrop] = useState(false);
+  const effectRan = useRef(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const token = localStorage.getItem("authToken");
   const { loggedUser, isLoading } = useSelector((state) => state.auth);
+  const [data, setData] = useState([]);
+  const { totalQuantity, cart, totalAmount } = useSelector(
+    (state) => state.cart
+  );
 
   useEffect(() => {
-    const fetchPrivateData = async () => {
-      await dispatch(verifyToken()).unwrap();
-    };
-    if (token) {
-      fetchPrivateData();
+    if (effectRan.current === false) {
+      const fetchData = async () => {
+        const products = await dispatch(getProducts()).unwrap();
+        if (typeof products !== "undefined") {
+          for (const x of loggedUser.cart) {
+            for (const y of products.data) {
+              if (x.product_id === y._id) {
+                setData((old) => [
+                  ...old,
+                  {
+                    name: y.name,
+                    price: y.price,
+                    img: y.img,
+                    quantity: x.quantity,
+                    _id: x.product_id,
+                  },
+                ]);
+              }
+            }
+          }
+        }
+      };
+      fetchData();
+      return () => {
+        effectRan.current = true;
+      };
     }
-  }, [dispatch, token]);
+    if (data.length !== 0) {
+      dispatch(setCart(data));
+    }
+  }, [dispatch, loggedUser.cart, data]);
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      dispatch(setTotal());
+      dispatch(setTotalAmount());
+    }
+  }, [dispatch, cart]);
 
   return (
     <nav className="shadow-md w-screen fixed top-0 left-0 z-10">
@@ -50,9 +89,7 @@ function Navbar() {
               <AiOutlineShoppingCart className="inline text-2xl" />
             </Link>
             <span className="bg-gray-800 text-white absolute cart-notify bottom-4 left-3 text-sm px-[7px] p-[1px] font-bold">
-              {!isLoading && loggedUser.cart.length > 0
-                ? loggedUser.cart.length
-                : 0}
+              {!isLoading && totalQuantity > 0 ? totalQuantity : 0}
             </span>
           </li>
           {localStorage.getItem("authToken") ? (

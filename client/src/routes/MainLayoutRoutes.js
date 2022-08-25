@@ -5,10 +5,25 @@ import Home from "../pages/shop/Home";
 import Cart from "../pages/shop/Cart";
 import ProductPage from "../pages/shop/ProductPage";
 import PrivateRoute from "../components/PrivateRoutes";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { verifyToken } from "../features/auth/authSlice";
 const MainLayoutRoutes = () => {
+  const token = localStorage.getItem("authToken");
+  const { isLoading } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchPrivateData = async () => {
+      await dispatch(verifyToken()).unwrap();
+    };
+    if (token) {
+      fetchPrivateData();
+    }
+  }, [dispatch, token]);
+
   return (
     <>
-      <Navbar />
+      {!isLoading && <Navbar />}
       <Routes>
         <Route index element={<Home />} />
         <Route path="/product/:product_id" element={<ProductPage />} />
