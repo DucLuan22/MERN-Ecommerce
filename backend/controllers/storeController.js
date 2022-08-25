@@ -22,7 +22,7 @@ exports.addToCart = async (req, res, next) => {
     if (checkExist.length === 0 && typeof quantity === "undefined") {
       user.cart.push({ product_id: product._id, quantity: 1 });
       await user.save();
-      res.status(200).json({ user });
+      res.status(200).json(user.cart);
       return user.cart;
     }
 
@@ -31,7 +31,7 @@ exports.addToCart = async (req, res, next) => {
         (product) => product.product_id.toString() === product_id
       )[0].quantity += 1;
       user.save();
-      res.status(200).json({ user });
+      res.status(200).json(user.cart);
       return user.cart;
     }
 
@@ -39,7 +39,7 @@ exports.addToCart = async (req, res, next) => {
       (product) => product.product_id.toString() === product_id
     )[0].quantity = quantity;
     user.save();
-    res.status(200).json({ user });
+    res.status(200).json(user.cart);
   } catch (error) {
     next(error);
   }

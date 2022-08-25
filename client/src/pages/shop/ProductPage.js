@@ -7,10 +7,13 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from "../../features/admin/productSlice";
+import { addToCart } from "../../features/shop/cartSlice";
 const ProductPage = () => {
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const { product, isLoading } = useSelector((state) => state.product);
+  const { loggedUser } = useSelector((state) => state.auth);
+  const { cart } = useSelector((state) => state.cart);
   const { product_id } = useParams();
   const navigate = useNavigate();
   const increment = () => {
@@ -26,6 +29,30 @@ const ProductPage = () => {
     dispatch(getProduct(product_id));
   }, [dispatch, product_id]);
 
+  const handleAddToCart = () => {
+    let inputQuantity = 0;
+    const itemFilter = cart.find((product) => product._id === product_id);
+    if (typeof item !== "undefined") {
+      inputQuantity = itemFilter.quantity;
+    }
+    console.log(product);
+    dispatch(
+      addToCart({
+        input: {
+          product_id,
+          user_id: loggedUser._id,
+          quantity: quantity + inputQuantity,
+        },
+        item: {
+          name: product.name,
+          price: product.price,
+          img: product.img,
+          quantity: quantity + inputQuantity,
+          _id: product._id,
+        },
+      })
+    );
+  };
   return isLoading ? (
     <Spinner
       aria-label="Extra small spinner example"
@@ -98,7 +125,10 @@ const ProductPage = () => {
             </div>
 
             <div className="flex gap-6 items-center md:my-10 ">
-              <button className="font-semibold bg-white order-b-[1px] border-solid border-black border-[1px] rounded-lg text-black hover:bg-slate-300 transition duration-500 p-1 w-[200px] h-12">
+              <button
+                onClick={() => handleAddToCart()}
+                className="font-semibold bg-white order-b-[1px] border-solid border-black border-[1px] rounded-lg text-black hover:bg-slate-300 transition duration-500 p-1 w-[200px] h-12"
+              >
                 Add to Cart
               </button>
               <Tooltip content="Add to wishlist">
