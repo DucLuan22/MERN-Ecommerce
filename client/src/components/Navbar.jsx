@@ -16,15 +16,15 @@ function Navbar() {
   const dispatch = useDispatch();
   const { loggedUser, isLoading } = useSelector((state) => state.auth);
   const [data, setData] = useState([]);
-  const { totalQuantity, cart, totalAmount } = useSelector(
-    (state) => state.cart
-  );
-
+  const { totalQuantity, cart } = useSelector((state) => state.cart);
   useEffect(() => {
     if (effectRan.current === false) {
       const fetchData = async () => {
         const products = await dispatch(getProducts()).unwrap();
-        if (typeof products !== "undefined") {
+        if (
+          typeof products !== "undefined" &&
+          typeof loggedUser.cart !== "undefined"
+        ) {
           for (const x of loggedUser.cart) {
             for (const y of products.data) {
               if (x.product_id === y._id) {
@@ -43,7 +43,7 @@ function Navbar() {
           }
         }
       };
-      fetchData();
+      if (typeof loggedUser !== "undefined") fetchData();
       return () => {
         effectRan.current = true;
       };
@@ -51,7 +51,7 @@ function Navbar() {
     if (data.length !== 0) {
       dispatch(setCart(data));
     }
-  }, [dispatch, loggedUser.cart, data]);
+  }, [dispatch, loggedUser?.cart, data]);
 
   useEffect(() => {
     if (cart.length > 0) {

@@ -32,10 +32,10 @@ const ProductPage = () => {
   const handleAddToCart = () => {
     let inputQuantity = 0;
     const itemFilter = cart.find((product) => product._id === product_id);
-    if (typeof item !== "undefined") {
+    if (typeof itemFilter !== "undefined") {
       inputQuantity = itemFilter.quantity;
     }
-    console.log(product);
+    console.log(inputQuantity);
     dispatch(
       addToCart({
         input: {
@@ -47,7 +47,7 @@ const ProductPage = () => {
           name: product.name,
           price: product.price,
           img: product.img,
-          quantity: quantity + inputQuantity,
+          quantity: quantity,
           _id: product._id,
         },
       })

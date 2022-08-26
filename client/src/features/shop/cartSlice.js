@@ -12,12 +12,26 @@ export const addToCart = createAsyncThunk(
     }
   }
 );
+export const removeFromCart = createAsyncThunk(
+  "cart/remove",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await Axios.delete("api/store/removeFromCart", {
+        data: payload,
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 const initialState = {
   isLoading: true,
   cart: [],
   totalQuantity: 0,
   totalAmount: 0,
+  errorMessage: "",
 };
 
 const cartSlice = createSlice({
@@ -70,6 +84,23 @@ const cartSlice = createSlice({
     build.addCase(addToCart.rejected, (state, action) => {
       state.isLoading = false;
       state.errorMessage = action.payload.message;
+    });
+
+    build.addCase(removeFromCart.rejected, (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload.message;
+    });
+
+    build.addCase(removeFromCart.pending, (state, action) => {
+      state.isLoading = true;
+    });
+
+    build.addCase(removeFromCart.fulfilled, (state, action) => {
+      state.isLoading = false;
+      console.log(action.payload);
+      state.cart = state.cart.filter(
+        (product) => product.product_id !== action.payload.product_id
+      );
     });
   },
 });

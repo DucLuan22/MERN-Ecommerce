@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { removeFromCart } from "../features/shop/cartSlice";
 
 const CartItem = ({ data }) => {
   const [quantity, setQuantity] = useState(data.quantity);
+  const { loggedUser } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const increment = () => {
     setQuantity(quantity + 1);
   };
@@ -11,6 +15,11 @@ const CartItem = ({ data }) => {
       return quantity;
     }
     setQuantity(quantity - 1);
+  };
+
+  const handleRemove = () => {
+    console.log(loggedUser._id);
+    dispatch(removeFromCart({ product_id: data._id, user_id: loggedUser._id }));
   };
   return (
     <tr className="font-['Nunito']">
@@ -24,9 +33,12 @@ const CartItem = ({ data }) => {
           <label className="text-[#3A3A3A]" htmlFor="itemName">
             {data.name}
           </label>
-          <a className="text-[#AAAAAA] w-4" href="http://localhost:3000/cart">
+          <p
+            className="text-[#AAAAAA] w-4 hover:cursor-pointer"
+            onClick={() => handleRemove()}
+          >
             Remove
-          </a>
+          </p>
         </div>
       </th>
       <th className="hidden md:table-cell">
