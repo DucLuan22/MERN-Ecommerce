@@ -24,6 +24,7 @@ const MainLayoutRoutes = () => {
   return (
     <>
       {!isLoading && <Navbar />}
+      {!token && <Navbar />}
       <Routes>
         <Route index element={<Home />} />
         <Route path="/product/:product_id" element={<ProductPage />} />
