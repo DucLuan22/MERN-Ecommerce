@@ -60,6 +60,10 @@ const cartSlice = createSlice({
         state.totalQuantity = state.cart[0].quantity;
       }
     },
+    clearCart: (state) => {
+      state.totalQuantity = 0;
+      state.totalAmount = 0;
+    },
   },
   extraReducers: (build) => {
     build.addCase(addToCart.fulfilled, (state, action) => {
@@ -99,11 +103,12 @@ const cartSlice = createSlice({
       state.isLoading = false;
       console.log(action.payload);
       state.cart = state.cart.filter(
-        (product) => product.product_id !== action.payload.product_id
+        (product) => product._id !== action.payload.product_id
       );
     });
   },
 });
 
-export const { setCart, setTotal, setTotalAmount } = cartSlice.actions;
+export const { setCart, setTotal, setTotalAmount, clearCart } =
+  cartSlice.actions;
 export default cartSlice.reducer;

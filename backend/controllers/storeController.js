@@ -54,9 +54,7 @@ exports.addToCart = async (req, res, next) => {
 
 exports.removeFromCart = async (req, res, next) => {
   const { product_id, user_id } = req.body;
-  console.log(req);
   try {
-    console.log(product_id);
     const user = await User.findById(user_id);
     if (!user) {
       return next(new ErrorResponse("User haven't login", 400));
@@ -73,6 +71,36 @@ exports.removeFromCart = async (req, res, next) => {
     );
     user.save();
     res.status(200).json(removeItem);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.addToWishlist = async (req, res, next) => {
+  const { product_id, user_id } = req.body;
+  try {
+    const user = await User.findById(user_id);
+
+    if (!user) {
+      return next(new ErrorResponse("User haven't login", 400));
+    }
+
+    const wishlistItem = user.wishlist.find(
+      (product) => product.product_id.toString() === product_id
+    );
+
+    if (wishlistItem) {
+      user.wishlist = user.wishlist.filter(
+        (product) => product.product_id.toString() !== product_id
+      );
+      user.save();
+      res.status(200).json(user.wishlist);
+      return 0;
+    }
+
+    user.wishlist.push({ product_id });
+    user.save();
+    res.status(200).json(user.wishlist);
   } catch (error) {
     next(error);
   }

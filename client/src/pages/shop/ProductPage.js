@@ -35,7 +35,7 @@ const ProductPage = () => {
     if (typeof itemFilter !== "undefined") {
       inputQuantity = itemFilter.quantity;
     }
-    console.log(inputQuantity);
+
     dispatch(
       addToCart({
         input: {

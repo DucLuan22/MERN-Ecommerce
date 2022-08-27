@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const { timeStamp } = require("console");
 const userSchema = mongoose.Schema(
   {
     email: {
@@ -31,6 +30,11 @@ const userSchema = mongoose.Schema(
         product_id: { type: mongoose.Types.ObjectId, ref: "product" },
         quantity: Number,
         total: Number,
+      },
+    ],
+    wishlist: [
+      {
+        product_id: { type: mongoose.Types.ObjectId, ref: "product" },
       },
     ],
     confirmed: {

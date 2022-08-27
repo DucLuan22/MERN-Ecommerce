@@ -7,7 +7,12 @@ import { useNavigate } from "react-router-dom";
 import { reset } from "../features/auth/authSlice";
 import { useRef } from "react";
 import { getProducts } from "../features/admin/productSlice";
-import { setCart, setTotal, setTotalAmount } from "../features/shop/cartSlice";
+import {
+  clearCart,
+  setCart,
+  setTotal,
+  setTotalAmount,
+} from "../features/shop/cartSlice";
 
 function Navbar() {
   const [isDrop, setIsDrop] = useState(false);
@@ -51,12 +56,15 @@ function Navbar() {
     if (data.length !== 0) {
       dispatch(setCart(data));
     }
-  }, [dispatch, loggedUser?.cart, data]);
+  }, [dispatch, loggedUser, data]);
 
   useEffect(() => {
     if (cart.length > 0) {
       dispatch(setTotal());
       dispatch(setTotalAmount());
+    }
+    if (cart.length === 0) {
+      dispatch(clearCart());
     }
   }, [dispatch, cart]);
 
@@ -110,7 +118,9 @@ function Navbar() {
                   {loggedUser.email}
                 </span>
               </Dropdown.Header>
-              <Dropdown.Item>Wishlist</Dropdown.Item>
+              <Dropdown.Item>
+                <Link to="/wishlist">Wishlist</Link>
+              </Dropdown.Item>
               <Dropdown.Item>Settings</Dropdown.Item>
               <Dropdown.Item>Earnings</Dropdown.Item>
               <Dropdown.Divider />
