@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromCart } from "../features/shop/cartSlice";
+import {
+  addToCart,
+  removeFromCart,
+  setTotal,
+  setTotalAmount,
+} from "../features/shop/cartSlice";
 
 const CartItem = ({ data }) => {
   const [quantity, setQuantity] = useState(data.quantity);
@@ -9,16 +14,48 @@ const CartItem = ({ data }) => {
   const dispatch = useDispatch();
   const increment = () => {
     setQuantity(quantity + 1);
+    dispatch(
+      addToCart({
+        input: {
+          product_id: data._id,
+          user_id: loggedUser._id,
+        },
+        item: {
+          name: data.name,
+          price: data.price,
+          img: data.img,
+          quantity: 1,
+          _id: data._id,
+        },
+      })
+    );
   };
   const decrement = () => {
     if (quantity <= 1) {
       return quantity;
     }
     setQuantity(quantity - 1);
+    console.log(quantity);
+    console.log(loggedUser._id);
+    dispatch(
+      addToCart({
+        input: {
+          product_id: data._id,
+          user_id: loggedUser._id,
+          quantity: quantity - 1,
+        },
+        item: {
+          name: data.name,
+          price: data.price,
+          img: data.img,
+          quantity: -1,
+          _id: data._id,
+        },
+      })
+    );
   };
 
   const handleRemove = () => {
-    console.log(loggedUser._id);
     dispatch(removeFromCart({ product_id: data._id, user_id: loggedUser._id }));
   };
   return (

@@ -8,6 +8,7 @@ import PrivateRoute from "../components/PrivateRoutes";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { verifyToken } from "../features/auth/authSlice";
+import Wishlist from "../pages/shop/Wishlist";
 const MainLayoutRoutes = () => {
   const token = localStorage.getItem("authToken");
   const { isLoading } = useSelector((state) => state.auth);
@@ -30,6 +31,7 @@ const MainLayoutRoutes = () => {
         <Route path="/product/:product_id" element={<ProductPage />} />
         <Route element={<PrivateRoute />}>
           <Route path="/cart" element={<Cart />} />
+          <Route path="/wishlist" element={<Wishlist />} />
         </Route>
       </Routes>
     </>

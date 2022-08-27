@@ -6,6 +6,7 @@ const Cart = () => {
   const { cart, totalAmount, totalQuantity } = useSelector(
     (state) => state.cart
   );
+
   return (
     <main className="w-screen h-screen bg-neutral-200 fixed overflow-auto">
       <section className="mt-24 bg-white w-[97%] mx-auto rounded-lg shadow-lg flex flex-col md:flex-row">
