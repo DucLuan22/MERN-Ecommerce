@@ -6,7 +6,7 @@ import AuthReducer from "./features/auth/authSlice";
 import BrandReducer from "./features/admin/brandSlice";
 import categoryReducer from "./features/admin/categorySlice";
 import CartReducer from "./features/shop/cartSlice";
-
+import WishlistReducer from "./features/shop/wishlistSlice";
 export const store = configureStore({
   reducer: {
     sidebar: SidebarReducer,
@@ -16,5 +16,6 @@ export const store = configureStore({
     category: categoryReducer,
     auth: AuthReducer,
     cart: CartReducer,
+    wishlist: WishlistReducer,
   },
 });

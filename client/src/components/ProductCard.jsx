@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { addToCart } from "../features/shop/cartSlice";
+import { addToWishlist } from "../features/shop/wishlistSlice";
 const ProductCard = ({ data }) => {
   const dispatch = useDispatch();
   const { loggedUser } = useSelector((state) => state.auth);
-
   const handleBuy = () => {
     dispatch(
       addToCart({
@@ -32,6 +32,19 @@ const ProductCard = ({ data }) => {
     });
   };
 
+  const handleAddToWishlist = () => {
+    dispatch(
+      addToWishlist({
+        data: { product_id: data._id, user_id: loggedUser._id },
+        item: {
+          name: data.name,
+          price: data.price,
+          img: data.img,
+          _id: data._id,
+        },
+      })
+    );
+  };
   return (
     <>
       <article className="border-solid border-[1px] border-gray-500 w-[280px] bottom-0 h-[380px] hover:relative hover:bottom-3 rounded-t-xl bg-zinc-50 my-3 flex flex-col justify-start hover:shadow-xl transition-all duration-300 ease-in-out">
@@ -48,7 +61,10 @@ const ProductCard = ({ data }) => {
         </Link>
         <h2>Price: ${data.price}</h2>
         <div className="flex flex-col">
-          <button className="font-semibold bg-black text-white mx-11 p-1 hover:bg-gray-800 transition duration-500 rounded-lg my-2">
+          <button
+            className="font-semibold bg-black text-white mx-11 p-1 hover:bg-gray-800 transition duration-500 rounded-lg my-2"
+            onClick={handleAddToWishlist}
+          >
             Add to Wishlist
           </button>
           <button

@@ -13,25 +13,28 @@ import {
   setTotal,
   setTotalAmount,
 } from "../features/shop/cartSlice";
+import { setWishlist } from "../features/shop/wishlistSlice";
 
 function Navbar() {
   const [isDrop, setIsDrop] = useState(false);
+  const refWishlist = useRef(false);
+  const [wishlist, setWishlistState] = useState([]);
   const effectRan = useRef(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { loggedUser, isLoading } = useSelector((state) => state.auth);
   const [data, setData] = useState([]);
   const { totalQuantity, cart } = useSelector((state) => state.cart);
+  const { products } = useSelector((state) => state.product);
   useEffect(() => {
     if (effectRan.current === false) {
       const fetchData = async () => {
-        const products = await dispatch(getProducts()).unwrap();
         if (
           typeof products !== "undefined" &&
           typeof loggedUser.cart !== "undefined"
         ) {
           for (const x of loggedUser.cart) {
-            for (const y of products.data) {
+            for (const y of products) {
               if (x.product_id === y._id) {
                 setData((old) => [
                   ...old,
@@ -57,6 +60,30 @@ function Navbar() {
       dispatch(setCart(data));
     }
   }, [dispatch, loggedUser, data]);
+
+  useEffect(() => {
+    if (refWishlist.current === false) {
+      products.map((product) => {
+        loggedUser.wishlist.forEach((item) => {
+          if (product._id === item.product_id) {
+            setWishlistState((prevState) => [
+              ...prevState,
+              {
+                name: product.name,
+                price: product.price,
+                img: product.img,
+                _id: product._id,
+              },
+            ]);
+          }
+        });
+      });
+      return () => {
+        refWishlist.current = true;
+      };
+    }
+    if (wishlist.length !== 0) dispatch(setWishlist(wishlist));
+  }, [loggedUser.wishlist, products, dispatch, wishlist]);
 
   useEffect(() => {
     if (cart.length > 0) {

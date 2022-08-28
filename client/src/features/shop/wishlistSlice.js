@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "../../configs/axiosConfig";
 
-const addToWishlist = createAsyncThunk(
+export const addToWishlist = createAsyncThunk(
   "wishlist/add",
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await Axios.post("api/store/addWishlist", payload);
-      return response.data;
+      await Axios.post("api/store/addToWishlist", payload.data);
+      return payload.item;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -22,11 +22,28 @@ const initialState = {
 const wishlistSlice = createSlice({
   name: "wishlist",
   initialState,
-  reducers: {},
+  reducers: {
+    setWishlist: (state, action) => {
+      state.isLoading = false;
+      state.wishlist = action.payload;
+    },
+  },
   extraReducers: (build) => {
     build.addCase(addToWishlist.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.wishlist = action.payload;
+      const index = state.wishlist.findIndex(
+        (product) => product._id === action.payload._id
+      );
+
+      if (index !== -1) {
+        state.wishlist = state.wishlist.filter(
+          (product) => product._id !== action.payload._id
+        );
+      }
+
+      if (index === -1) {
+        state.wishlist.push(action.payload);
+      }
     });
 
     build.addCase(addToWishlist.pending, (state, action) => {
@@ -38,5 +55,5 @@ const wishlistSlice = createSlice({
     });
   },
 });
-
+export const { setWishlist } = wishlistSlice.actions;
 export default wishlistSlice.reducer;
