@@ -9,10 +9,12 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { verifyToken } from "../features/auth/authSlice";
 import Wishlist from "../pages/shop/Wishlist";
+import { getProducts } from "../features/admin/productSlice";
 const MainLayoutRoutes = () => {
   const token = localStorage.getItem("authToken");
   const { isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
   useEffect(() => {
     const fetchPrivateData = async () => {
       await dispatch(verifyToken()).unwrap();
@@ -20,6 +22,7 @@ const MainLayoutRoutes = () => {
     if (token) {
       fetchPrivateData();
     }
+    dispatch(getProducts());
   }, [dispatch, token]);
 
   return (
