@@ -2,17 +2,26 @@ import React from "react";
 import { Breadcrumb, Rating, Tooltip, Spinner } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
 import { useNavigate, useParams } from "react-router-dom";
-import { AiOutlinePlus, AiOutlineMinus, AiFillHeart } from "react-icons/ai";
+import {
+  AiOutlinePlus,
+  AiOutlineMinus,
+  AiFillHeart,
+  AiOutlineHeart,
+} from "react-icons/ai";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from "../../features/admin/productSlice";
 import { addToCart } from "../../features/shop/cartSlice";
+import { addToWishlist } from "../../features/shop/wishlistSlice";
+import { toast } from "react-toastify";
 const ProductPage = () => {
   const [quantity, setQuantity] = useState(1);
+  const [isWishlist, setIsWishlist] = useState(false);
   const dispatch = useDispatch();
   const { product, isLoading } = useSelector((state) => state.product);
   const { loggedUser } = useSelector((state) => state.auth);
+  const { wishlist } = useSelector((state) => state.wishlist);
   const { cart } = useSelector((state) => state.cart);
   const { product_id } = useParams();
   const navigate = useNavigate();
@@ -28,6 +37,13 @@ const ProductPage = () => {
   useEffect(() => {
     dispatch(getProduct(product_id));
   }, [dispatch, product_id]);
+
+  useEffect(() => {
+    const item = wishlist.find((product) => product._id === product_id);
+    if (item) {
+      setIsWishlist(true);
+    }
+  }, [wishlist, product_id]);
 
   const handleAddToCart = () => {
     let inputQuantity = 0;
@@ -52,6 +68,42 @@ const ProductPage = () => {
         },
       })
     );
+  };
+
+  const handleWishlist = (state) => {
+    dispatch(
+      addToWishlist({
+        data: { product_id, user_id: loggedUser._id },
+        item: {
+          name: product.name,
+          price: product.price,
+          img: product.img,
+          _id: product._id,
+        },
+      })
+    );
+    if (state === "Remove") {
+      toast.error("Item remove from wishlist.", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setIsWishlist(false);
+    }
+    if (state === "Add") {
+      toast.success("Item added to wishlist.", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setIsWishlist(true);
+    }
   };
   return isLoading ? (
     <Spinner
@@ -131,8 +183,24 @@ const ProductPage = () => {
               >
                 Add to Cart
               </button>
-              <Tooltip content="Add to wishlist">
-                <AiFillHeart className="text-3xl text-pink-600" />
+              <Tooltip
+                content={
+                  !isWishlist ? "Add to wishlist" : "Remove from Wishlist"
+                }
+              >
+                <div
+                  onClick={() => {
+                    !isWishlist
+                      ? handleWishlist("Add")
+                      : handleWishlist("Remove");
+                  }}
+                >
+                  {!isWishlist ? (
+                    <AiOutlineHeart className="text-3xl text-pink-600" />
+                  ) : (
+                    <AiFillHeart className="text-3xl text-pink-600" />
+                  )}
+                </div>
               </Tooltip>
             </div>
           </article>

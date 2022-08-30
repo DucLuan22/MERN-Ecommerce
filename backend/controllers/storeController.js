@@ -105,3 +105,29 @@ exports.addToWishlist = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.removeFromWishlist = async (req, res, next) => {
+  const { product_id, user_id } = req.body;
+  try {
+    const user = await User.findById(user_id);
+
+    if (!user) {
+      return next(new ErrorResponse("User haven't login", 400));
+    }
+
+    const wishlistItem = user.wishlist.find(
+      (product) => product.product_id.toString() === product_id
+    );
+    if (!wishlistItem) {
+      return next(new ErrorResponse("Can't find product", 400));
+    }
+
+    user.wishlist = user.wishlist.filter(
+      (product) => product.product_id.toString() !== product_id
+    );
+    user.save();
+    res.status(200).json(wishlistItem);
+  } catch (error) {
+    next(error);
+  }
+};

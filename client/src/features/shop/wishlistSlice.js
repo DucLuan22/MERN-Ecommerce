@@ -13,8 +13,22 @@ export const addToWishlist = createAsyncThunk(
   }
 );
 
+export const removeFromWishlist = createAsyncThunk(
+  "wishlist/remove",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await Axios.delete("api/store/removeFromWishlist", {
+        data: payload,
+      });
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 const initialState = {
-  isLoading: true,
+  isLoading: false,
   wishlist: [],
   errorMessage: "",
 };
@@ -52,6 +66,22 @@ const wishlistSlice = createSlice({
     build.addCase(addToWishlist.rejected, (state, action) => {
       state.isLoading = false;
       state.errorMessage = action.payload.message;
+    });
+
+    build.addCase(removeFromWishlist.rejected, (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload.message;
+    });
+
+    build.addCase(removeFromWishlist.pending, (state, action) => {
+      state.isLoading = true;
+    });
+
+    build.addCase(removeFromWishlist.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.wishlist = state.wishlist.filter(
+        (product) => product._id !== action.payload.product_id
+      );
     });
   },
 });
