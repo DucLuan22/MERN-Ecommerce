@@ -101,7 +101,7 @@ const cartSlice = createSlice({
 
     build.addCase(removeFromCart.fulfilled, (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
+
       state.cart = state.cart.filter(
         (product) => product._id !== action.payload.product_id
       );

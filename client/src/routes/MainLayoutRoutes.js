@@ -14,7 +14,6 @@ const MainLayoutRoutes = () => {
   const token = localStorage.getItem("authToken");
   const { isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
   useEffect(() => {
     const fetchPrivateData = async () => {
       await dispatch(verifyToken()).unwrap();

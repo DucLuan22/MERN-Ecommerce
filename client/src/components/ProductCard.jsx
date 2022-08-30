@@ -1,12 +1,24 @@
 import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { addToCart } from "../features/shop/cartSlice";
 import { addToWishlist } from "../features/shop/wishlistSlice";
+import { BsTrash } from "react-icons/bs";
 const ProductCard = ({ data }) => {
   const dispatch = useDispatch();
+  const { wishlist } = useSelector((state) => state.wishlist);
   const { loggedUser } = useSelector((state) => state.auth);
+  const [isWishlist, setIsWishlist] = useState(false);
+  useEffect(() => {
+    const item = wishlist.find((product) => product._id === data._id);
+    if (item) {
+      setIsWishlist(true);
+    }
+  }, [wishlist, data._id]);
+
   const handleBuy = () => {
     dispatch(
       addToCart({
@@ -23,16 +35,15 @@ const ProductCard = ({ data }) => {
 
     toast.success("Item added to cart", {
       position: "top-right",
-      autoClose: 3000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
-      pauseOnHover: true,
       draggable: true,
       progress: undefined,
     });
   };
 
-  const handleAddToWishlist = () => {
+  const handleWishlist = (state) => {
     dispatch(
       addToWishlist({
         data: { product_id: data._id, user_id: loggedUser._id },
@@ -44,6 +55,28 @@ const ProductCard = ({ data }) => {
         },
       })
     );
+    if (state === "Remove") {
+      toast.error("Item remove wishlist.", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setIsWishlist(false);
+    }
+    if (state === "Add") {
+      toast.success("Item added to wishlist.", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setIsWishlist(true);
+    }
   };
   return (
     <>
@@ -62,10 +95,23 @@ const ProductCard = ({ data }) => {
         <h2>Price: ${data.price}</h2>
         <div className="flex flex-col">
           <button
-            className="font-semibold bg-black text-white mx-11 p-1 hover:bg-gray-800 transition duration-500 rounded-lg my-2"
-            onClick={handleAddToWishlist}
+            className={`font-semibold ${
+              !isWishlist
+                ? "bg-black text-white hover:bg-gray-800 "
+                : "bg-white text-red-600 border-[1px] border-red-500 hover:bg-red-200"
+            } mx-11 p-1 transition duration-500 rounded-lg my-2`}
+            onClick={() => {
+              !isWishlist ? handleWishlist("Add") : handleWishlist("Remove");
+            }}
           >
-            Add to Wishlist
+            {!isWishlist ? (
+              "Add to Wishlist"
+            ) : (
+              <div>
+                <BsTrash className="inline mr-1 mb-1" />
+                Remove from wishlist
+              </div>
+            )}
           </button>
           <button
             onClick={() => handleBuy()}
