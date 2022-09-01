@@ -6,7 +6,6 @@ import { Dropdown, Avatar } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import { reset } from "../features/auth/authSlice";
 import { useRef } from "react";
-import { getProducts } from "../features/admin/productSlice";
 import {
   clearCart,
   setCart,
