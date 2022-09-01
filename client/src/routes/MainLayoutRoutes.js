@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { verifyToken } from "../features/auth/authSlice";
 import Wishlist from "../pages/shop/Wishlist";
 import { getProducts } from "../features/admin/productSlice";
+import CheckOut from "../pages/shop/CheckOut";
 const MainLayoutRoutes = () => {
   const token = localStorage.getItem("authToken");
   const { isLoading } = useSelector((state) => state.auth);
@@ -34,6 +35,7 @@ const MainLayoutRoutes = () => {
         <Route element={<PrivateRoute />}>
           <Route path="/cart" element={<Cart />} />
           <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/checkout" element={<CheckOut />} />
         </Route>
       </Routes>
     </>

@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Pagination from "../../components/Pagination";
 import { Spinner } from "flowbite-react";
+import CarouselStore from "../../components/Store/CarouselStore";
 
 const Home = () => {
   const { isLoading, products } = useSelector((state) => state.product);
@@ -9,7 +10,9 @@ const Home = () => {
     <main className=" w-screen mt-21">
       {/* Slider */}
       <section className="text-center">
-        <div className="flex h-[500px] md:h-[600px] md:w-4/5 shadow-lg rounded md:mx-auto my-3"></div>
+        <div className="h-[400px] md:h-[500px] xl:h-[600px] mt-20">
+          <CarouselStore />
+        </div>
       </section>
       {/* Product */}
       <section className="mt-10">

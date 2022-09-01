@@ -6,6 +6,7 @@ import CategoryAdminPage from "../pages/admin/CategoryAdminPage";
 import { Route, Routes } from "react-router-dom";
 import BrandAdminPage from "../pages/admin/BrandAdminPage";
 import Sidebar from "../components/Sidebar";
+import CheckOut from "../pages/shop/CheckOut";
 export const AdminLayout = () => {
   return (
     <div className="flex">
