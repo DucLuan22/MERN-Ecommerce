@@ -68,8 +68,8 @@ const authSlice = createSlice({
 
     build.addCase(verifyToken.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.isLogin = true;
       state.loggedUser = action.payload;
+      state.isLogin = true;
     });
 
     build.addCase(verifyToken.pending, (state, action) => {
