@@ -27,9 +27,7 @@ const userSchema = mongoose.Schema(
     ],
     orders: [
       {
-        product_id: { type: mongoose.Types.ObjectId, ref: "product" },
-        quantity: Number,
-        total: Number,
+        order_id: { type: mongoose.Types.ObjectId, ref: "order" },
       },
     ],
     wishlist: [
@@ -66,7 +64,6 @@ userSchema.methods.getSignedToken = function () {
     expiresIn: process.env.JWT_EXPIRE,
   });
 };
-console.log(process.env.JWT_EXPIRE);
 userSchema.methods.getConfirmedToken = function () {
   const confirmToken = crypto.randomBytes(20).toString("hex");
 

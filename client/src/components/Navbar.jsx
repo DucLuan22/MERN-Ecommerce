@@ -61,7 +61,10 @@ function Navbar() {
   }, [dispatch, loggedUser, data]);
 
   useEffect(() => {
-    if (refWishlist.current === false) {
+    if (
+      refWishlist.current === false &&
+      typeof loggedUser.wishlist !== "undefined"
+    ) {
       products.map((product) => {
         loggedUser.wishlist.forEach((item) => {
           if (product._id === item.product_id) {
@@ -92,7 +95,7 @@ function Navbar() {
     if (cart.length === 0) {
       dispatch(clearCart());
     }
-  }, [dispatch, cart]);
+  }, [dispatch, cart, loggedUser]);
 
   return (
     <nav className="shadow-md w-screen fixed top-0 left-0 z-10">

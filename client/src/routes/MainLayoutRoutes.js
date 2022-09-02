@@ -13,21 +13,21 @@ import { getProducts } from "../features/admin/productSlice";
 import CheckOut from "../pages/shop/CheckOut";
 const MainLayoutRoutes = () => {
   const token = localStorage.getItem("authToken");
-  const { isLoading } = useSelector((state) => state.auth);
+  const { isLogin } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(getProducts());
     const fetchPrivateData = async () => {
       await dispatch(verifyToken()).unwrap();
     };
     if (token) {
       fetchPrivateData();
     }
-    dispatch(getProducts());
   }, [dispatch, token]);
 
   return (
     <>
-      {!isLoading && <Navbar />}
+      {isLogin && <Navbar />}
       {!token && <Navbar />}
       <Routes>
         <Route index element={<Home />} />
