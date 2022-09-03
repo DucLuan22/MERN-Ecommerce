@@ -7,12 +7,13 @@ import { useNavigate } from "react-router-dom";
 import { reset } from "../features/auth/authSlice";
 import { useRef } from "react";
 import {
-  clearCart,
+  resetAmount,
   setCart,
   setTotal,
   setTotalAmount,
 } from "../features/shop/cartSlice";
 import { setWishlist } from "../features/shop/wishlistSlice";
+import SearchBar from "./Store/SearchBar";
 
 function Navbar() {
   const [isDrop, setIsDrop] = useState(false);
@@ -93,15 +94,20 @@ function Navbar() {
       dispatch(setTotalAmount());
     }
     if (cart.length === 0) {
-      dispatch(clearCart());
+      dispatch(resetAmount());
     }
   }, [dispatch, cart, loggedUser]);
 
   return (
     <nav className="shadow-md w-screen fixed top-0 left-0 z-10">
-      <div className="md:flex items-center justify-around bg-white py-4 md:px-10 px-7">
+      <div className="flex items-center justify-evenly md:justify-around  bg-white py-4 md:px-10 px-7">
         <div className="font-bold text-3xl cursor-pointer flex items-center text-gray-800">
           Luan
+        </div>
+        <div className="w-[250px] md:w-[30%] mr-10 md:mr-0">
+          {products.length > 0 && (
+            <SearchBar data={products} placeholder={"Search"} />
+          )}
         </div>
         <div className="text-3xl absolute right-8 top-6 md:hidden">
           <AiOutlineMenu onClick={() => setIsDrop(!isDrop)} />
@@ -116,11 +122,9 @@ function Navbar() {
             <Link to="/">Home</Link>
           </li>
           <li className="hover:text-gray-500 duration-500 my-7 md:my-0">
-            Brand
+            Browse
           </li>
-          <li className="hover:text-gray-500 duration-500 my-7 md:my-0">
-            Categories
-          </li>
+
           <li className="hover:text-gray-500 duration-500 my-7 md:my-0 relative">
             <Link to="/cart">
               <AiOutlineShoppingCart className="inline text-2xl" />
@@ -129,6 +133,7 @@ function Navbar() {
               {!isLoading && totalQuantity > 0 ? totalQuantity : 0}
             </span>
           </li>
+
           {localStorage.getItem("authToken") ? (
             <Dropdown
               label={
@@ -151,7 +156,6 @@ function Navbar() {
                 <Link to="/wishlist">Wishlist</Link>
               </Dropdown.Item>
               <Dropdown.Item>Settings</Dropdown.Item>
-              <Dropdown.Item>Earnings</Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item
                 onClick={() => {

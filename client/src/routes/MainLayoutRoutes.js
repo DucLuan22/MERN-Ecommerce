@@ -11,6 +11,7 @@ import { verifyToken } from "../features/auth/authSlice";
 import Wishlist from "../pages/shop/Wishlist";
 import { getProducts } from "../features/admin/productSlice";
 import CheckOut from "../pages/shop/CheckOut";
+import Browse from "../pages/shop/Browse";
 const MainLayoutRoutes = () => {
   const token = localStorage.getItem("authToken");
   const { isLogin } = useSelector((state) => state.auth);
@@ -32,6 +33,7 @@ const MainLayoutRoutes = () => {
       <Routes>
         <Route index element={<Home />} />
         <Route path="/product/:product_id" element={<ProductPage />} />
+        <Route path="/browse" element={<Browse />} />
         <Route element={<PrivateRoute />}>
           <Route path="/cart" element={<Cart />} />
           <Route path="/wishlist" element={<Wishlist />} />
