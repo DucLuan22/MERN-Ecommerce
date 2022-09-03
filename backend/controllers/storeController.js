@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const Order = require("../models/Order");
 const User = require("../models/User");
 const ErrorResponse = require("../utils/errorResponse");
 exports.addToCart = async (req, res, next) => {
@@ -127,6 +128,23 @@ exports.removeFromWishlist = async (req, res, next) => {
     );
     user.save();
     res.status(200).json(wishlistItem);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.createOrder = async (req, res, next) => {
+  const { user_id } = req.body;
+  try {
+    const user = await User.findById(user_id);
+    if (!user) {
+      return next(new ErrorResponse("User haven't login", 400));
+    }
+    const order = await Order.create({ ...req.body });
+    user.orders.push(order._id);
+    user.cart = [];
+    user.save();
+    res.status(200).json(order);
   } catch (error) {
     next(error);
   }
