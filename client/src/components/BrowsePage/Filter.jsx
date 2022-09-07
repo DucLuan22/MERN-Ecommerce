@@ -1,12 +1,28 @@
 import React from "react";
-
+import FilterItem from "./FilterItem";
+import {} from "flowbite-react";
 export const Filter = () => {
   return (
-    <section className="sm:col-span-3 lg:col-span-2 bg-[#F9F9F9] border-r-[2px] border-">
-      <div className="flex p-2 border-b-[1px] border-[#c4c3c3]">
-        <h1 className=" text-3xl font-bold text-[#252121] tracking-widest">
-          Filter
-        </h1>
+    <section className="sm:col-span-3 lg:col-span-2 border-r-[1px] border-r-[#888888] w-[300px]">
+      <h1 className=" text-2xl font-bold text-[#252121] tracking-widest px-2 py-[13px]">
+        Filter
+      </h1>
+      <hr />
+      <div className="mt-2 mx-3">
+        <h2 className="text-lg font-bold text-[#252121]">Category</h2>
+        <ul className="flex flex-col gap-1">
+          <FilterItem />
+          <FilterItem />
+          <FilterItem />
+        </ul>
+      </div>
+      <div className="mt-2 mx-3">
+        <h2 className="text-lg font-bold text-[#252121]">Brand</h2>
+        <ul className="flex flex-col gap-1">
+          <FilterItem />
+          <FilterItem />
+          <FilterItem />
+        </ul>
       </div>
     </section>
   );

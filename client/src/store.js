@@ -8,6 +8,7 @@ import categoryReducer from "./features/admin/categorySlice";
 import CartReducer from "./features/shop/cartSlice";
 import WishlistReducer from "./features/shop/wishlistSlice";
 import OrderReducer from "./features/shop/orderSlice";
+import paginationSlice from "./features/shop/paginationSlice";
 export const store = configureStore({
   reducer: {
     sidebar: SidebarReducer,
@@ -19,5 +20,6 @@ export const store = configureStore({
     cart: CartReducer,
     wishlist: WishlistReducer,
     order: OrderReducer,
+    pagination: paginationSlice,
   },
 });
