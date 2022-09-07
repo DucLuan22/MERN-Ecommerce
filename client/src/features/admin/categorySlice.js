@@ -31,7 +31,7 @@ export const deleteCategory = createAsyncThunk(
   async (category_id, thunkAPI) => {
     try {
       const response = await Axios.delete(
-        `/admin/category/delete/${category_id}`,
+        `/api/category/delete/${category_id}`,
         category_id
       );
       console.log(response.data.data);
