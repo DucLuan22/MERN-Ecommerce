@@ -5,7 +5,7 @@ import { setItems } from "../../features/shop/paginationSlice";
 function PaginationBrowse({ data }) {
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 1;
+  const itemsPerPage = 16;
   const dispatch = useDispatch();
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
@@ -23,14 +23,14 @@ function PaginationBrowse({ data }) {
     <main className="mt-auto">
       <ReactPaginate
         breakLabel="..."
-        nextLabel="next >"
+        nextLabel=">"
         onPageChange={handlePageClick}
         pageRangeDisplayed={3}
         pageCount={pageCount}
         marginPagesDisplayed={2}
-        previousLabel="< previous"
+        previousLabel="<"
         renderOnZeroPageCount={null}
-        containerClassName="flex justify-center gap-2 md:gap-5 h-12 content-center text-xl "
+        containerClassName="flex justify-center gap-2 md:gap-5 h-12 content-center text-xl"
         pageLinkClassName="page-num p-1 md:p-3"
         previousLinkClassName="page-num p-1 md:p-3"
         nextLinkClassName="page-num p-1 md:p-3"
