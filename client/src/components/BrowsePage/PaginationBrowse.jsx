@@ -5,7 +5,7 @@ import { setItems } from "../../features/shop/paginationSlice";
 function PaginationBrowse({ data }) {
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 16;
+  const itemsPerPage = 9;
   const dispatch = useDispatch();
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;

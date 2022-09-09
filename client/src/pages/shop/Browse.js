@@ -1,5 +1,5 @@
 import { Dropdown } from "flowbite-react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Filter } from "../../components/BrowsePage/Filter";
 import { RiArrowUpDownFill } from "react-icons/ri";
 import { BsArrowDownUp, BsFilterCircle } from "react-icons/bs";
@@ -10,19 +10,34 @@ import PaginationBrowse from "../../components/BrowsePage/PaginationBrowse";
 import { useEffect } from "react";
 import Axios from "../../configs/axiosConfig";
 const Browse = () => {
-  const { pagination } = useSelector((state) => state.pagination);
+  const { items } = useSelector((state) => state.pagination);
   const [open, setOpen] = useState(false);
-  const [products, setProduct] = useState([]);
+  const [products, setProducts] = useState([]);
+  const ref = useRef(false);
   useEffect(() => {
-    const fetchProducts = async () => {
-      const response = await Axios.get("https://fakestoreapi.com/products");
+    if (ref.current === false) {
+      const fetchProducts = async () => {
+        const response = await Axios.get("https://fakestoreapi.com/products");
 
-      if (response) {
-        setProduct(response.data);
-      }
-    };
-    fetchProducts();
+        if (response) {
+          setProducts(response.data);
+        }
+      };
+      fetchProducts();
+
+      return () => (ref.current = true);
+    }
   }, []);
+
+  const handleHighestSort = () => {
+    const filtered = products.sort((a, b) => b.price - a.price);
+    setProducts([...filtered]);
+  };
+
+  const handleLowestSort = () => {
+    const filtered = products.sort((a, b) => a.price - b.price);
+    setProducts([...filtered]);
+  };
   return (
     <div className="w-screen h-screen mt-[75px] ">
       <main className="flex flex-col sm:flex-row h-full">
@@ -44,13 +59,13 @@ const Browse = () => {
             </div>
             <div>
               <Dropdown label="Sorting" color="light">
-                <Dropdown.Item>
+                <Dropdown.Item onClick={handleHighestSort}>
                   <div className="flex items-center gap-2">
                     <RiArrowUpDownFill className="text-xl" />
                     Sort by Highest Price
                   </div>
                 </Dropdown.Item>
-                <Dropdown.Item>
+                <Dropdown.Item onClick={handleLowestSort}>
                   <div className="flex items-center gap-2">
                     <BsArrowDownUp className="text-lg font-bold" />
                     Sort by Lowest Price
@@ -68,22 +83,14 @@ const Browse = () => {
           <hr />
 
           <div className="flex flex-col mt-7">
-            <section className="flex mx-5 flex-wrap gap-2 justify-center sm:justify-start mb-7">
-              <FilterCard />
-              <FilterCard />
-              <FilterCard />
-              <FilterCard />
-              <FilterCard />
-              <FilterCard />
-              <FilterCard />
-              <FilterCard />
-              <FilterCard />
-              <FilterCard />
-              <FilterCard />
-              <FilterCard />
+            <section className="flex mx-5 flex-wrap md:gap-6 gap-3 lg:gap-8 justify-center sm:justify-start mb-7">
+              {products.length > 0 &&
+                items.map((product) => (
+                  <FilterCard data={product} key={product.id} />
+                ))}
             </section>
             <div className="mt-auto mb-4">
-              {products.length > 0 && <PaginationBrowse data={products} />}
+              <PaginationBrowse data={products} />
             </div>
           </div>
         </section>
