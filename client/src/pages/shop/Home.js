@@ -10,7 +10,7 @@ const Home = () => {
     <main className=" w-screen mt-21">
       {/* Slider */}
       <section className="text-center">
-        <div className="h-[400px] md:h-[500px] xl:h-[600px] mt-20">
+        <div className="h-[400px] md:h-[500px] overflow-y-hidden xl:h-[600px] mt-20">
           <CarouselStore />
         </div>
       </section>

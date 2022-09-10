@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setItems } from "../../features/shop/paginationSlice";
 function PaginationBrowse({ data }) {
   const [pageCount, setPageCount] = useState(0);

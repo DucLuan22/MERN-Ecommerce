@@ -80,6 +80,7 @@ function Navbar() {
             ]);
           }
         });
+        return wishlist;
       });
       return () => {
         refWishlist.current = true;
