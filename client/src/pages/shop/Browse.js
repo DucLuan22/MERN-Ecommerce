@@ -1,5 +1,5 @@
 import { Dropdown } from "flowbite-react";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Filter } from "../../components/BrowsePage/Filter";
 import { RiArrowUpDownFill } from "react-icons/ri";
 import { BsArrowDownUp, BsFilterCircle } from "react-icons/bs";
@@ -8,26 +8,27 @@ import FilterCard from "../../components/BrowsePage/FilterCard";
 import { useSelector } from "react-redux";
 import PaginationBrowse from "../../components/BrowsePage/PaginationBrowse";
 import { useEffect } from "react";
-import Axios from "../../configs/axiosConfig";
+
 const Browse = () => {
   const { items } = useSelector((state) => state.pagination);
   const [open, setOpen] = useState(false);
   const [products, setProducts] = useState([]);
-  const ref = useRef(false);
+  const [result, setResult] = useState(0);
+  const allProducts = useSelector((state) => state.product.products);
+
   useEffect(() => {
-    if (ref.current === false) {
-      const fetchProducts = async () => {
-        const response = await Axios.get("https://fakestoreapi.com/products");
-
-        if (response) {
-          setProducts(response.data);
-        }
-      };
-      fetchProducts();
-
-      return () => (ref.current = true);
+    if (allProducts.length > 0) {
+      setProducts([...allProducts]);
+      setResult(allProducts.length);
     }
-  }, []);
+  }, [allProducts]);
+
+  const handleNewestSort = () => {
+    const filtered = products.sort(
+      (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+    );
+    setProducts([...filtered]);
+  };
 
   const handleHighestSort = () => {
     const filtered = products.sort((a, b) => b.price - a.price);
@@ -38,6 +39,14 @@ const Browse = () => {
     const filtered = products.sort((a, b) => a.price - b.price);
     setProducts([...filtered]);
   };
+
+  const handleOldesttSort = () => {
+    const filtered = products.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+    setProducts([...filtered]);
+  };
+
   return (
     <div className="w-screen h-screen mt-[75px] ">
       <main className="flex flex-col sm:flex-row h-full">
@@ -50,7 +59,7 @@ const Browse = () => {
         </div>
         <section className="flex flex-col w-full">
           <div className="flex justify-between ml-6 lg:mr-40 items-center p-2 mr-3 md:mr-0">
-            <p className="text-xl font-semibold">Results: 123</p>
+            <p className="text-xl font-semibold">Results: {result}</p>
             <div className="block sm:hidden ml-auto mr-4">
               <BsFilterCircle
                 className="text-4xl"
@@ -72,9 +81,21 @@ const Browse = () => {
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <div className="flex items-center gap-2">
+                  <div
+                    className="flex items-center gap-2"
+                    onClick={handleNewestSort}
+                  >
                     <AiFillCalendar className="text-lg font-bold" />
-                    Sort by Date
+                    Sort by Newest
+                  </div>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <div
+                    className="flex items-center gap-2"
+                    onClick={handleOldesttSort}
+                  >
+                    <AiFillCalendar className="text-lg font-bold" />
+                    Sort by Oldest
                   </div>
                 </Dropdown.Item>
               </Dropdown>
@@ -83,7 +104,7 @@ const Browse = () => {
           <hr />
 
           <div className="flex flex-col mt-7">
-            <section className="flex mx-5 flex-wrap md:gap-6 gap-3 lg:gap-8 justify-center sm:justify-start mb-7">
+            <section className="flex flex-wrap mx-10 md:gap-6 gap-3 lg:gap-8 justify-center sm:justify-start mb-7">
               {products.length > 0 &&
                 items.map((product) => (
                   <FilterCard data={product} key={product.id} />
