@@ -123,7 +123,7 @@ function Navbar() {
             <Link to="/">Home</Link>
           </li>
           <li className="hover:text-gray-500 duration-500 my-7 md:my-0">
-            Browse
+            <Link to="/browse">Browse</Link>
           </li>
 
           <li className="hover:text-gray-500 duration-500 my-7 md:my-0 relative">

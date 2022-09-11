@@ -11,7 +11,7 @@ function PaginationBrowse({ data }) {
     const endOffset = itemOffset + itemsPerPage;
     dispatch(setItems(data.slice(itemOffset, endOffset)));
     setPageCount(Math.ceil(data.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, data]);
+  }, [itemOffset, itemsPerPage, data, dispatch]);
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {

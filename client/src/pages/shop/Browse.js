@@ -55,7 +55,7 @@ const Browse = () => {
             !open ? "bottom-96 h-0 opacity-0" : "bottom-0"
           } sm:block sm:opacity-100 sm:h-full sm:flex-grow sm:bottom-0 bg-gray-50`}
         >
-          <Filter />
+          <Filter setProducts={setProducts} setResult={setResult} />
         </div>
         <section className="flex flex-col w-full">
           <div className="flex justify-between ml-6 lg:mr-40 items-center p-2 mr-3 md:mr-0">
@@ -107,7 +107,7 @@ const Browse = () => {
             <section className="flex flex-wrap mx-10 md:gap-6 gap-3 lg:gap-8 justify-center sm:justify-start mb-7">
               {products.length > 0 &&
                 items.map((product) => (
-                  <FilterCard data={product} key={product.id} />
+                  <FilterCard data={product} key={product._id} />
                 ))}
             </section>
             <div className="mt-auto mb-4">
