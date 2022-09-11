@@ -1,16 +1,22 @@
 import React, { useEffect } from "react";
 import FilterItem from "./FilterItem";
 import { useDispatch, useSelector } from "react-redux";
+import { Spinner } from "flowbite-react";
 import { getCategories } from "../../features/admin/categorySlice";
-export const Filter = () => {
+import { getBrands } from "../../features/admin/brandSlice";
+export const Filter = ({ setProducts, setResult }) => {
   const dispatch = useDispatch();
-  const { categories, isLoading } = useSelector((state) => state.category);
+  const { categories } = useSelector((state) => state.category);
+  const categoryIsLoading = useSelector((state) => state.category.isLoading);
+  const { brands } = useSelector((state) => state.brand);
+  const brandIsLoading = useSelector((state) => state.brand.isLoading);
   useEffect(() => {
     dispatch(getCategories());
+    dispatch(getBrands());
   }, [dispatch]);
 
-  if (isLoading) {
-    return <div>Loading</div>;
+  if (categoryIsLoading || brandIsLoading) {
+    return <Spinner aria-label="Extra large spinner example" size="xl" />;
   }
   return (
     <section className="h-[300px] sm:overflow-y-visible sm:col-span-3 lg:col-span-2 w-full sm:w-[200px] md:w-[250px] lg:w-[300px] overflow-y-auto">
@@ -23,16 +29,28 @@ export const Filter = () => {
         <ul className="flex flex-col gap-1">
           {categories.length > 0 &&
             categories.map((category) => (
-              <FilterItem data={category} key={category._id} />
+              <FilterItem
+                data={category}
+                key={category._id}
+                type={"category"}
+                setProducts={setProducts}
+                setResult={setResult}
+              />
             ))}
         </ul>
       </div>
       <div className="mt-2 mx-3">
         <h2 className="text-lg font-bold text-[#252121]">Brand</h2>
         <ul className="flex flex-col gap-1">
-          <FilterItem />
-          <FilterItem />
-          <FilterItem />
+          {brands.map((brand) => (
+            <FilterItem
+              data={brand}
+              key={brand._id}
+              type={"brand"}
+              setProducts={setProducts}
+              setResult={setResult}
+            />
+          ))}
         </ul>
       </div>
     </section>

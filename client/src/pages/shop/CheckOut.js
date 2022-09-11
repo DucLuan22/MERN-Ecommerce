@@ -162,7 +162,6 @@ function CheckOut() {
               <div>
                 <Select
                   required={true}
-                  value={order.city}
                   name="city"
                   onChange={(e) => {
                     const { name, value } = e.target;
@@ -189,7 +188,6 @@ function CheckOut() {
                 <Select
                   required={true}
                   name="district"
-                  value={order.district}
                   onChange={(e) => {
                     const { name, value } = e.target;
                     setDistrict(value);
@@ -215,7 +213,6 @@ function CheckOut() {
                 <Select
                   required={true}
                   name="ward"
-                  value={order.ward}
                   onChange={(e) => {
                     const { name, value } = e.target;
                     setWard(value);
