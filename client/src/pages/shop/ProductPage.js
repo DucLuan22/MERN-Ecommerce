@@ -15,6 +15,8 @@ import { getProduct } from "../../features/admin/productSlice";
 import { addToCart } from "../../features/shop/cartSlice";
 import { addToWishlist } from "../../features/shop/wishlistSlice";
 import { toast } from "react-toastify";
+import RatingComponent from "../../components/ProductPage/RatingComponent";
+import ReviewsContainer from "../../components/ProductPage/ReviewsContainer";
 const ProductPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [isWishlist, setIsWishlist] = useState(false);
@@ -112,7 +114,7 @@ const ProductPage = () => {
       className="mt-24"
     />
   ) : (
-    <div className="w-screen h-screen overflow-auto">
+    <div className="w-screen h-screen">
       <div className="mt-24 md:mx-14 lg:mx-44 mx-1">
         {/* Breadcrumb */}
         <Breadcrumb
@@ -170,13 +172,13 @@ const ProductPage = () => {
                 type="number"
                 value={quantity}
                 min={1}
-                className="[appearance:textfield] border-[1px] border-gray-500 rounded-xl w-16 h-11 text-center"
+                className="[appearance:textfield] border-[1px] pl-6 text-center border-gray-500 rounded-xl w-[70px] h-11"
                 readOnly
               />
               <AiOutlineMinus onClick={() => decrement()} />
             </div>
 
-            <div className="flex gap-6 items-center md:my-10 ">
+            <div className="flex gap-6 items-center my-6 ">
               <button
                 onClick={() => handleAddToCart()}
                 className="font-semibold bg-white order-b-[1px] border-solid border-black border-[1px] rounded-lg text-black hover:bg-slate-300 transition duration-500 p-1 w-[200px] h-12"
@@ -204,6 +206,17 @@ const ProductPage = () => {
               </Tooltip>
             </div>
           </article>
+        </section>
+      </div>
+      <div className="md:mx-16 lg:mx-28 rounded-xl mb-9 mx-3 ">
+        <section className="grid md:grid-cols-4 gap-[30px] md:gap-0">
+          <div className="col-span-4 md:col-span-2 w-full xl:w-[800px] lg:w-[600px] md:w-[400px]">
+            <span className="text-2xl font-bold">Customer Reviews</span>
+            <RatingComponent />
+          </div>
+          <div className="col-span-4 md:col-span-2 sm:ml-0 mr-1">
+            <ReviewsContainer />
+          </div>
         </section>
       </div>
     </div>
