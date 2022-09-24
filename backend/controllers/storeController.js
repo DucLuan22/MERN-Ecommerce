@@ -20,6 +20,8 @@ exports.addToCart = async (req, res, next) => {
       },
     });
 
+    console.log(checkExist, quantity);
+
     if (checkExist.length === 0 && typeof quantity === "undefined") {
       user.cart.push({ product_id: product._id, quantity: 1 });
       await user.save();
