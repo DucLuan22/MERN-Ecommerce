@@ -43,19 +43,18 @@ const cartSlice = createSlice({
     },
     setTotalAmount: (state) => {
       if (state.cart.length > 1) {
-        state.totalAmount = state.cart.reduce(
-          (prev, current) =>
-            prev.quantity * prev.price + current.quantity * current.price
-        );
+        state.totalAmount = state.cart.reduce((prev, current) => {
+          return prev + current.quantity * current.price;
+        }, 0);
       } else {
         state.totalAmount = state.cart[0].quantity * state.cart[0].price;
       }
     },
     setTotal: (state) => {
       if (state.cart.length > 1) {
-        state.totalQuantity = state.cart.reduce(
-          (prev, current) => prev.quantity + current.quantity
-        );
+        state.totalQuantity = state.cart.reduce((prev, current) => {
+          return prev + current.quantity;
+        }, 0);
       } else {
         state.totalQuantity = state.cart[0].quantity;
       }

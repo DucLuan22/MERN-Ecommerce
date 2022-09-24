@@ -4,6 +4,7 @@ import MainLayoutRoutes from "./routes/MainLayoutRoutes";
 import AdminLayout from "./routes/AdminLayout";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import UserSettingRoutes from "./routes/UserSettingRoutes";
 function App() {
   return (
     <>
@@ -11,6 +12,7 @@ function App() {
         <Route path="auth/*" element={<AuthRoutes />} />
         <Route path="admin/*" element={<AdminLayout />} />
         <Route path="/*" element={<MainLayoutRoutes />} />
+        <Route path="user/*" element={<UserSettingRoutes />} />
       </Routes>
       <ToastContainer
         position="top-right"
