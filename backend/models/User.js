@@ -38,6 +38,13 @@ const userSchema = mongoose.Schema(
     confirmed: {
       type: Boolean,
     },
+    reviews: [
+      {
+        product_id: { type: mongoose.Schema.Types.ObjectId, ref: "products" },
+        text: { type: String },
+        rating: { type: Number },
+      },
+    ],
     resetPasswordToken: String,
     resetPasswordExpire: Date,
     confirmRegistrationToken: String,
