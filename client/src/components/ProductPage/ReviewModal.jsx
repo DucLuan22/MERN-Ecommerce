@@ -19,25 +19,39 @@ const ReviewModal = () => {
         <Modal.Body>
           <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
             <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-              Review
+              Write a Review
             </h3>
             <div>
               <div className="mb-2 block">
                 <Label htmlFor="rating" value="Rating:" />
               </div>
-              <Select>
-                <option className="p-2">5.0 ★★★★★</option>
-                <option className="p-2">4.0 ★★★★</option>
-                <option className="p-2">3.0 ★★★</option>
-                <option className="p-2">2.0 ★★</option>
-                <option className="p-2">1.0 ★</option>
+              <Select required={true}>
+                <option className="p-2" value={5}>
+                  5.0 ★★★★★
+                </option>
+                <option className="p-2" value={4}>
+                  4.0 ★★★★
+                </option>
+                <option className="p-2" value={3}>
+                  3.0 ★★★
+                </option>
+                <option className="p-2" value={2}>
+                  2.0 ★★
+                </option>
+                <option className="p-2" value={1}>
+                  1.0 ★
+                </option>
               </Select>
             </div>
             <div>
               <div className="mb-2 block">
                 <Label htmlFor="password" value="Review:" />
               </div>
-              <Textarea rows={6} placeholder="Leave a comment..." />
+              <Textarea
+                rows={6}
+                required={true}
+                placeholder="Leave a comment..."
+              />
             </div>
             <div className="flex">
               <span className="ml-auto">

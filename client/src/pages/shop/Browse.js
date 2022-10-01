@@ -48,7 +48,7 @@ const Browse = () => {
   };
 
   return (
-    <div className="w-screen h-screen mt-[75px] ">
+    <div className="w-screen h-screen mt-[75px]">
       <main className="flex flex-col sm:flex-row h-full">
         <div
           className={`sm:bg-white relative transition-[bottom] duration-300  ${
@@ -57,8 +57,8 @@ const Browse = () => {
         >
           <Filter setProducts={setProducts} setResult={setResult} />
         </div>
-        <section className="flex flex-col w-full">
-          <div className="flex justify-between ml-6 lg:mr-40 items-center p-2 mr-3 md:mr-0">
+        <section className="flex flex-col w-auto">
+          <div className="flex justify-between ml-6 md:ml-0 lg:mr-40 items-center p-2 mr-3 md:mr-0">
             <p className="text-xl font-semibold">Results: {result}</p>
             <div className="block sm:hidden ml-auto mr-4">
               <BsFilterCircle
@@ -103,8 +103,8 @@ const Browse = () => {
           </div>
           <hr />
 
-          <div className="flex flex-col mt-7">
-            <section className="flex flex-wrap mx-10 md:gap-6 gap-3 lg:gap-8 justify-center sm:justify-start mb-7">
+          <div className="flex flex-col mt-7 ">
+            <section className="flex flex-wrap mx-10 md:gap-6 gap-3 lg:gap-8 justify-center sm:justify-start mb-7 ">
               {products.length > 0 &&
                 items.map((product) => (
                   <FilterCard data={product} key={product._id} />

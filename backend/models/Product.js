@@ -15,6 +15,14 @@ const productSchema = mongoose.Schema(
     img: {
       type: String,
     },
+    reviews: [
+      {
+        user_id: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+        text: { type: String },
+        rating: { type: Number },
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
   },
   { timestamps: true }
 );

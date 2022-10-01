@@ -26,7 +26,7 @@ app.use("/api/product/", require("./routes/adminProductRoutes"));
 app.use("/api/category/", require("./routes/adminCategoryRoutes"));
 app.use("/api/brand/", require("./routes/adminBrandRoutes"));
 app.use("/api/user/", require("./routes/userRoutes"));
-app.use("/api/store", require("./routes/storeRoutes"));
+app.use("/api/store/", require("./routes/storeRoutes"));
 
 //ErrorHandler
 app.use(ErrorHandler);

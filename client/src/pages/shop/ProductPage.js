@@ -108,11 +108,7 @@ const ProductPage = () => {
     }
   };
   return isLoading ? (
-    <Spinner
-      aria-label="Extra small spinner example"
-      size="xs"
-      className="mt-24"
-    />
+    <Spinner size="xs" className="mt-24" />
   ) : (
     <div className="w-screen h-screen">
       <div className="mt-24 md:mx-14 lg:mx-44 mx-1">
@@ -211,11 +207,11 @@ const ProductPage = () => {
       <div className="md:mx-16 lg:mx-28 rounded-xl mb-9 mx-3 ">
         <section className="grid md:grid-cols-4 gap-[30px] md:gap-0">
           <div className="col-span-4 md:col-span-2 w-full xl:w-[800px] lg:w-[600px] md:w-[400px]">
-            <span className="text-2xl font-bold">Customer Reviews</span>
-            <RatingComponent />
+            <span className="text-2xl font-bold">Customer Reviews:</span>
+            {product && <RatingComponent />}
           </div>
           <div className="col-span-4 md:col-span-2 sm:ml-0 mr-1">
-            <ReviewsContainer />
+            {product && <ReviewsContainer data={product?.reviews} />}
           </div>
         </section>
       </div>
