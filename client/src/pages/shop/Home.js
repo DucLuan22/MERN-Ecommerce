@@ -7,7 +7,7 @@ import CarouselStore from "../../components/Store/CarouselStore";
 const Home = () => {
   const { isLoading, products } = useSelector((state) => state.product);
   return (
-    <main className=" w-screen mt-21">
+    <main className=" w-screen">
       {/* Slider */}
       <section className="text-center">
         <div className="h-[400px] md:h-[500px] overflow-y-hidden xl:h-[600px] mt-20">

@@ -19,7 +19,7 @@ export const Filter = ({ setProducts, setResult }) => {
     return <Spinner aria-label="Extra large spinner example" size="xl" />;
   }
   return (
-    <section className="h-[300px] sm:overflow-y-visible sm:col-span-3 lg:col-span-2 w-full sm:w-[200px] md:w-[250px] lg:w-[300px] overflow-y-auto">
+    <section className="h-[300px] sm:overflow-y-visible sm:col-span-3 lg:col-span-2 w-full sm:w-[200px] md:w-[250px] lg:w-[300px]">
       <h1 className=" text-2xl font-bold text-[#252121] tracking-widest px-2 py-[13px]">
         Filter
       </h1>
