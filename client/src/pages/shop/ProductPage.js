@@ -211,7 +211,12 @@ const ProductPage = () => {
             {product && <RatingComponent />}
           </div>
           <div className="col-span-4 md:col-span-2 sm:ml-0 mr-1">
-            {product && <ReviewsContainer data={product?.reviews} />}
+            {product && (
+              <ReviewsContainer
+                data={product?.reviews}
+                product_id={product_id}
+              />
+            )}
           </div>
         </section>
       </div>
