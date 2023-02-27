@@ -69,6 +69,18 @@ export const updateProducts = createAsyncThunk(
   }
 );
 
+export const writeReview = createAsyncThunk(
+  "product/writeReview",
+  async (data, thunkAPI) => {
+    try {
+      const response = await Axios.post(`/api/store/createReview/`, data);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const initialState = {
   isLoading: false,
   errorMessage: "",
@@ -158,6 +170,20 @@ const productSlice = createSlice({
     build.addCase(getProduct.rejected, (state, action) => {
       state.isLoading = false;
       state.errorMessage = action.payload.message;
+    });
+
+    build.addCase(writeReview.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.product.reviews.push(action.payload);
+    });
+
+    build.addCase(writeReview.rejected, (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload.message;
+    });
+
+    build.addCase(writeReview.pending, (state, action) => {
+      state.isLoading = true;
     });
   },
 });
