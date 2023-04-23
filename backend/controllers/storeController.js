@@ -134,13 +134,18 @@ exports.removeFromWishlist = async (req, res, next) => {
 };
 
 exports.createOrder = async (req, res, next) => {
-  const { user_id } = req.body;
+  const { user_id, products } = req.body;
   try {
     const user = await User.findById(user_id);
     if (!user) {
       return next(new ErrorResponse("User haven't login", 400));
     }
     const order = await Order.create({ ...req.body });
+    products.forEach(async (product) => {
+      const foundProduct = await Product.findById(product.product_id);
+      foundProduct.stock = foundProduct.stock - product.quantity;
+      foundProduct.save();
+    });
     user.orders.push(order._id);
     user.cart = [];
     user.save();
