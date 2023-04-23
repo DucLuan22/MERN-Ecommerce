@@ -2,7 +2,7 @@ import React from "react";
 import { Carousel } from "flowbite-react";
 function CarouselStore() {
   return (
-    <Carousel className="object-fill">
+    <Carousel>
       <img
         src="https://images.wallpaperscraft.com/image/single/laptop_backlight_colorful_194324_1920x1080.jpg"
         alt="..."

@@ -80,7 +80,6 @@ userSchema.methods.getConfirmedToken = function () {
     .digest("hex");
 
   this.confirmRegistrationExpire = Date.now() + 10 * (60 * 1000);
-
   return confirmToken;
 };
 
