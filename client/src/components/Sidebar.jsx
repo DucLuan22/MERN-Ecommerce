@@ -13,6 +13,7 @@ import { SiSimpleanalytics } from "react-icons/si";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { openSidebar, openSubMenu } from "../features/admin/adminSidebarSlice";
+import { reset } from "../features/auth/authSlice";
 
 const Sidebar = () => {
   const { open, openSubMenuItem } = useSelector((state) => state.sidebar);
@@ -50,7 +51,7 @@ const Sidebar = () => {
     { title: "Analytics", to: "#", icon: <SiSimpleanalytics /> },
     { title: "Inbox", spacing: true, to: "#", icon: <AiOutlineInbox /> },
     { title: "Settings", to: "#", icon: <AiOutlineSetting /> },
-    { title: "Logout", to: "#", icon: <IoLogOutOutline /> },
+    { title: "Logout", to: "/auth/login", icon: <IoLogOutOutline /> },
   ];
   return (
     <>
@@ -93,7 +94,16 @@ const Sidebar = () => {
                     !open && "scale-0"
                   }`}
                   to={item.to}
-                  onClick={item.submenu ? () => dispatch(openSubMenu()) : ""}
+                  onClick={
+                    item.submenu
+                      ? () => dispatch(openSubMenu())
+                      : "" || item.title === "Logout"
+                      ? () => {
+                          localStorage.removeItem("authAdminToken");
+                          dispatch(reset());
+                        }
+                      : ""
+                  }
                 >
                   {item.title}
                 </Link>
