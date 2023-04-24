@@ -78,7 +78,7 @@ exports.confirmRegistration = async (req, res, next) => {
     next(error);
   }
 };
-//LOST - Login
+//POST - Login
 exports.login = async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -171,6 +171,7 @@ exports.forgotPassword = async (req, res, next) => {
     next(error);
   }
 };
+
 //PUT - Reset Password
 exports.resetPassword = async (req, res, next) => {
   const resetPasswordToken = crypto

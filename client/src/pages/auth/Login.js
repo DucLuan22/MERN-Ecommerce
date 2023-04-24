@@ -13,6 +13,8 @@ function Login() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [adminPassword, setAdminPassword] = useState("");
   const navigate = useNavigate();
 
   const showUserForm = () => {
@@ -27,14 +29,26 @@ function Login() {
   const loginHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await Axios.post("/api/auth/login", {
-        email,
-        password: userPassword,
-      });
+      if (isUser) {
+        const { data } = await Axios.post("/api/auth/login", {
+          email,
+          password: userPassword,
+        });
 
-      localStorage.setItem("authToken", data.token);
+        localStorage.setItem("authToken", data.token);
 
-      navigate("/");
+        navigate("/");
+      }
+
+      if (isAdmin) {
+        const { data } = await Axios.post("/api/adminAuth/login", {
+          username: username,
+          password: adminPassword,
+        });
+
+        localStorage.setItem("authAdminToken", data.token);
+        navigate("/admin/dashboard");
+      }
     } catch (error) {
       setError(error.response.data.error);
       setTimeout(() => {
@@ -116,6 +130,7 @@ function Login() {
                 className="border-[1px] border-gray-400 h-10 rounded-lg p-2"
                 placeholder="Enter the username"
                 required
+                onChange={(e) => setUsername(e.target.value)}
               />
             )}
             {isUser && (
@@ -141,6 +156,7 @@ function Login() {
                 placeholder="Enter admin password"
                 autoComplete="off"
                 required
+                onChange={(e) => setAdminPassword(e.target.value)}
               />
             )}
             {isUser && (
