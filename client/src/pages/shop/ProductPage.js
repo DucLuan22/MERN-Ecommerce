@@ -111,7 +111,7 @@ const ProductPage = () => {
     <Spinner size="xs" className="mt-24" />
   ) : (
     <div className="w-screen h-screen">
-      <div className="mt-24 md:mx-14 lg:mx-44 mx-1">
+      <div className="mt-2 md:mx-14 lg:mx-44 mx-1">
         {/* Breadcrumb */}
         <Breadcrumb
           aria-label=""

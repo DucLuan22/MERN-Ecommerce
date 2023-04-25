@@ -56,7 +56,7 @@ const Sidebar = () => {
   return (
     <>
       <div
-        className={`bg-dark-purple h-screen p-5 pt-8 absolute z-50 float-left duration-500 ${
+        className={`bg-[#4B33A8] min-h-screen p-5 pt-8 absolute z-50 float-left duration-500 ${
           open ? "w-72" : "w-20"
         }  `}
       >
@@ -84,7 +84,7 @@ const Sidebar = () => {
           {Menus.map((item, index) => (
             <React.Fragment key={index}>
               <li
-                className={`text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md mt-2 ${
+                className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md mt-2 ${
                   item.spacing ? "mt-9" : "mt-2"
                 }`}
               >

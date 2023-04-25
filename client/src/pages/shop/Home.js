@@ -8,10 +8,10 @@ import Footer from "../../components/Footer";
 const Home = () => {
   const { isLoading, products } = useSelector((state) => state.product);
   return (
-    <main className=" w-screen">
+    <main className="w-screen">
       {/* Slider */}
-      <section className="text-center">
-        <div className="h-[400px] md:h-[500px] overflow-y-hidden xl:h-[600px] rounded-none">
+      <section lassName="h-[400px] md:h-[500px] overflow-y-hidden xl:h-[600px] rounded-none">
+        <div>
           <CarouselStore />
         </div>
       </section>
