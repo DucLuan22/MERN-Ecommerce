@@ -1,6 +1,7 @@
 import React from "react";
 import { IoIosPaper } from "react-icons/io";
 import { BsPiggyBank } from "react-icons/bs";
+import LineChartUpdate from "./LineChartUpdate";
 
 function DashBoardUpdate() {
   return (
@@ -30,7 +31,8 @@ function DashBoardUpdate() {
         </div>
       </span>
       <section className="col-span-2 h-[470px] w-auto mt-5">
-        Sale Statistic
+        <h1>Sale Statistics</h1>
+        <LineChartUpdate />
       </section>
     </div>
   );

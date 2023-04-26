@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import DashboardPopularItemCard from "../../components/Dashboard/DashboardPopularItemCard";
 import DashBoardUpdate from "../../components/Dashboard/DashBoardUpdate";
 import SlidebarShade from "../../components/SlidebarShade";
+import { getTopSaleNumbers } from "../../features/admin/dashboardSlice";
 export const Dashboard = () => {
+  const dispatch = useDispatch();
+  const { isTopSaleLoading, topSellingList } = useSelector(
+    (state) => state.dashboard
+  );
+  useEffect(() => {
+    dispatch(getTopSaleNumbers());
+  }, [dispatch]);
+
   return (
     <div className="ml-28 w-full h-full">
       <SlidebarShade />
@@ -16,11 +26,10 @@ export const Dashboard = () => {
             Top selling products
           </h1>
           <ul className="flex flex-col gap-3 mt-3">
-            <DashboardPopularItemCard />
-            <DashboardPopularItemCard />
-            <DashboardPopularItemCard />
-            <DashboardPopularItemCard />
-            <DashboardPopularItemCard />
+            {!isTopSaleLoading &&
+              topSellingList.map((item, i) => (
+                <DashboardPopularItemCard data={item} index={i} />
+              ))}
           </ul>
         </section>
       </div>

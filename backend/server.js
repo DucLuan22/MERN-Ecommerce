@@ -4,6 +4,7 @@ const cors = require("cors");
 const PORT = process.env.PORT || 5000;
 const connectDB = require("./configs/db");
 const ErrorHandler = require("./middlewares/errorHandler");
+const { application } = require("express");
 //Connect to Database
 connectDB();
 const app = express();
@@ -28,6 +29,7 @@ app.use("/api/brand/", require("./routes/adminBrandRoutes"));
 app.use("/api/user/", require("./routes/userRoutes"));
 app.use("/api/store/", require("./routes/storeRoutes"));
 app.use("/api/adminAuth/", require("./routes/authAdminRoutes"));
+app.use("/api/dashboard", require("./routes/dashboardRoutes"));
 
 //ErrorHandler
 app.use(ErrorHandler);

@@ -10,8 +10,8 @@ const Home = () => {
   return (
     <main className="w-screen">
       {/* Slider */}
-      <section lassName="h-[400px] md:h-[500px] overflow-y-hidden xl:h-[600px] rounded-none">
-        <div>
+      <section className="text-center">
+        <div className="h-[400px] md:h-[500px] overflow-y-hidden xl:h-[600px] rounded-none">
           <CarouselStore />
         </div>
       </section>
