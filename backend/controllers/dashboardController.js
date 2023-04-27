@@ -60,7 +60,7 @@ exports.getYearlyOrders = async (req, res, next) => {
     const results = {};
 
     // Iterate through each month of the year
-    for (let i = 0; i <= 12; i++) {
+    for (let i = 0; i < 12; i++) {
       let sum = 0;
       // Set the start date to the first day of the month
       startDate.setFullYear(currentDate.getFullYear(), i, 1);
@@ -85,27 +85,13 @@ exports.getYearlyOrders = async (req, res, next) => {
       });
 
       // Add the items to the results object with the month as the key
-      results[i] = {
+      results[getMonthName(i)] = {
         numberOfSales: data.length,
         totalRevenue: sum,
       };
     }
     res.status(200).json({
       success: true,
-      months: [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ],
       results,
     });
   } catch (err) {
@@ -173,6 +159,49 @@ exports.getMonthlyOrders = async (req, res, next) => {
   }
 };
 
+exports.getTotalOrdersAndNewlyAddedOrders = async (req, res, next) => {
+  const allOrders = await Order.find({});
+
+  const currentDate = new Date();
+  const startDate = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    currentDate.getDate()
+  );
+  const endDate = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    currentDate.getDate() + 1
+  );
+
+  if (!allOrders) {
+    return next(new ErrorResponse("Can't find any Order"), 400);
+  }
+
+  const allOrdersDaily = await Order.find({
+    createdAt: {
+      $gte: startDate,
+      $lt: endDate,
+    },
+  });
+  res.status(200).json({
+    success: true,
+    dailyOrders: allOrdersDaily.length,
+    totalOrders: allOrders.length,
+    totalRevenue: calculateTotalRevenue(allOrders),
+    totalDailyRevenue: calculateTotalRevenue(allOrdersDaily),
+  });
+};
+
+function calculateTotalRevenue(orders) {
+  return orders.reduce((total, order) => {
+    const productsTotal = order.products.reduce((subtotal, product) => {
+      return subtotal + product.subTotal * product.quantity;
+    }, 0);
+    return total + productsTotal;
+  }, 0);
+}
+
 function getMonthName(monthNumber) {
   const months = [
     "January",
@@ -189,6 +218,5 @@ function getMonthName(monthNumber) {
     "December",
   ];
 
-  // Subtract 1 from the monthNumber to get the correct index in the months array
   return months[monthNumber];
 }

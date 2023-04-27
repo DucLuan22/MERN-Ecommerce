@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -10,6 +10,9 @@ import {
   Legend,
   Interaction,
 } from "chart.js";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getYearlyOrders } from "../../features/admin/dashboardSlice";
 ChartJS.register(
   LineElement,
   CategoryScale,
@@ -19,34 +22,45 @@ ChartJS.register(
   Legend
 );
 function LineChartUpdate() {
+  const dispatch = useDispatch();
+  const [dataType, setDataType] = useState("");
+  const { isUnitMode, isRevenueMode, isLineChartLoading, lineChartData } =
+    useSelector((state) => state.dashboard);
+  useEffect(() => {
+    dispatch(getYearlyOrders());
+  }, []);
+  useEffect(() => {
+    if (isUnitMode) {
+      setDataType("numberOfSales");
+    }
+    if (isRevenueMode) {
+      setDataType("totalRevenue");
+    }
+  }, [isUnitMode]);
   const data = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    labels: Object.keys(lineChartData),
     datasets: [
       {
-        label: "First dataset",
-        data: [33, 53, 85, 41, 44, 65],
+        label: "Sales Unit",
+        data: Object.keys(lineChartData).map(
+          (key) => lineChartData[key][dataType]
+        ),
         fill: true,
         backgroundColor: "#42427D",
         borderColor: "rgba(75,192,192,1)",
-      },
-      {
-        label: "Second dataset",
-        data: [33, 25, 35, 51, 54, 76],
-        fill: false,
-        borderColor: "#742774",
       },
     ],
   };
   const options = {
     plugins: {
-      legend: true,
+      legend: false,
       tooltip: {
         mode: "index",
         intersect: false,
       },
     },
   };
-  return <Line data={data} options={options} />;
+  return !isLineChartLoading && <Line data={data} options={options} />;
 }
 
 export default LineChartUpdate;
