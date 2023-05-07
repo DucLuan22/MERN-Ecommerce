@@ -140,7 +140,7 @@ exports.createOrder = async (req, res, next) => {
     if (!user) {
       return next(new ErrorResponse("User haven't login", 400));
     }
-    const order = await Order.create({ ...req.body });
+    const order = await Order.create({ ...req.body, status: "new" });
     products.forEach(async (product) => {
       const foundProduct = await Product.findById(product.product_id);
       foundProduct.stock = foundProduct.stock - product.quantity;
@@ -172,6 +172,46 @@ exports.createReview = async (req, res, next) => {
     product.save();
 
     res.status(200).json({ product_id, user_id, rating, text });
+  } catch (error) {
+    next(error);
+  }
+};
+exports.getOrders = async (req, res, next) => {
+  try {
+    const orders = await Order.find({});
+
+    if (!orders || orders.length === 0) {
+      return next(new ErrorResponse("There are no orders", 400));
+    }
+
+    const totalOrderedList = [];
+
+    for (const order of orders) {
+      const products = [];
+
+      for (const item of order.products) {
+        const product = await Product.findById(item.product_id);
+        if (product) {
+          products.push({ ...item.toObject(), name: product.name });
+        }
+      }
+
+      const totalSales = products.reduce(
+        (acc, curr) => acc + curr.subTotal * curr.quantity,
+        0
+      );
+      totalOrderedList.push({
+        id: order._id,
+        products,
+        totalSales,
+        status: order.status,
+        phone: order.phone,
+        firstName: order.firstName,
+        lastName: order.lastName,
+      });
+    }
+
+    res.status(200).json(totalOrderedList);
   } catch (error) {
     next(error);
   }

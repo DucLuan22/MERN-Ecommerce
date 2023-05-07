@@ -2,7 +2,6 @@ import React from "react";
 import { BsArrowLeftShort, BsChevronDown, BsFillBagFill } from "react-icons/bs";
 import {
   AiFillEnvironment,
-  AiFillShopping,
   AiOutlineSetting,
   AiOutlineInbox,
 } from "react-icons/ai";
@@ -26,15 +25,9 @@ const Sidebar = () => {
       to: "/admin/dashboard",
     },
     {
-      title: "Page",
+      title: "Orders",
       icon: <FaPager />,
-      to: "#",
-    },
-    {
-      title: "Media",
-      spacing: true,
-      icon: <AiFillShopping />,
-      to: "#",
+      to: "/admin/orders",
     },
     {
       title: "Management",
@@ -45,7 +38,6 @@ const Sidebar = () => {
         { title: "Categories", to: "/admin/category" },
         { title: "Products", to: "/admin/product" },
         { title: "Brand", to: "/admin/brand" },
-        { title: "Orders", to: "/admin/dashboard" },
       ],
     },
     { title: "Analytics", to: "#", icon: <SiSimpleanalytics /> },

@@ -54,7 +54,6 @@ const initialState = {
   isTopSaleLoading: false,
   isLineChartLoading: false,
   isTotalOrdersAndNewlyAddedOrders: false,
-  isLineChartLoading: false,
   isUnitMode: true,
   isRevenueMode: false,
   errorMessage: "",

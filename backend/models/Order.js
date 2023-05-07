@@ -23,6 +23,7 @@ const orderSchema = mongoose.Schema(
       },
     ],
     total: { type: Number },
+    status: { type: String },
   },
   { timestamps: true }
 );
