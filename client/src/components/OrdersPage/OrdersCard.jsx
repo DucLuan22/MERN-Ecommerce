@@ -22,7 +22,7 @@ function OrdersCard({ data }) {
         />
         {data.firstName + " " + data.lastName}
       </div>
-      <h4 className="my-auto capitalize text-[0.6rem] sm:text-[0.7rem] md:text-[0.8rem] lg:text-[1rem] text-[#0066b2]">
+      <h4 className="my-auto capitalize text-[0.6rem] sm:text-[0.7rem] md:text-[0.8rem] lg:text-[1rem] text-[#0066b2]zz">
         {data.phone}
       </h4>
       <div className="my-auto capitalize text-[0.6rem] sm:text-[0.7rem] md:text-[0.8rem] lg:text-[1rem] text-[#0066b2] flex items-center">

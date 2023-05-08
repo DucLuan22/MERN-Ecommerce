@@ -12,6 +12,7 @@ import { getProducts } from "../features/admin/productSlice";
 import CheckOut from "../pages/shop/CheckOut";
 import Browse from "../pages/shop/Browse";
 import PrivateUserRoutes from "../components/PrivateRoutes/PrivateUserRoutes";
+import History from "../pages/shop/History";
 const MainLayoutRoutes = () => {
   const token = localStorage.getItem("authToken");
   const { isLogin } = useSelector((state) => state.auth);
@@ -36,6 +37,7 @@ const MainLayoutRoutes = () => {
         <Route path="/browse" element={<Browse />} />
         <Route element={<PrivateUserRoutes />}>
           <Route path="/cart" element={<Cart />} />
+          <Route path="/history" element={<History />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/checkout" element={<CheckOut />} />
         </Route>

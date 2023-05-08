@@ -217,6 +217,49 @@ exports.getOrders = async (req, res, next) => {
   }
 };
 
+exports.getOrder = async (req, res, next) => {
+  const { user_id } = req.params;
+
+  try {
+    const orders = await Order.find({ user_id: user_id });
+
+    if (!orders || orders.length === 0) {
+      return next(new ErrorResponse("There are no orders", 400));
+    }
+
+    const totalOrderedList = [];
+
+    for (const order of orders) {
+      const products = [];
+
+      for (const item of order.products) {
+        const product = await Product.findById(item.product_id);
+        if (product) {
+          products.push({ ...item.toObject(), name: product.name });
+        }
+      }
+
+      const totalSales = products.reduce(
+        (acc, curr) => acc + curr.subTotal * curr.quantity,
+        0
+      );
+      totalOrderedList.push({
+        id: order._id,
+        products,
+        totalSales,
+        status: order.status,
+        phone: order.phone,
+        firstName: order.firstName,
+        lastName: order.lastName,
+        email: order.email,
+      });
+    }
+
+    res.status(200).json(totalOrderedList);
+  } catch (error) {
+    next(error);
+  }
+};
 exports.deleteReview = async (req, res, next) => {
   const { product_id, user_id, review_id } = req.body;
   try {

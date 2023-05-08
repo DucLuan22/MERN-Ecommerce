@@ -157,7 +157,9 @@ function Navbar() {
               <Dropdown.Item>
                 <Link to="/wishlist">Wishlist</Link>
               </Dropdown.Item>
-              <Dropdown.Item>Settings</Dropdown.Item>
+              <Dropdown.Item>
+                <Link to="/history">History</Link>
+              </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item
                 onClick={() => {
