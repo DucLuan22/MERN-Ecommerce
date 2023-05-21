@@ -15,11 +15,6 @@ function OrdersCard({ data }) {
         {data?.id.slice(2, 8)}
       </p>
       <div className="my-auto capitalize text-[0.6rem] sm:text-[0.7rem] md:text-[0.8rem] lg:text-[1rem] text-[#002D62] font-bold flex items-center col-start-3 col-end-5">
-        <img
-          src="https://images.unsplash.com/photo-1683115763606-43dd57a47712?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-          alt="avata"
-          className="h-[40px] w-[40px] rounded-full mr-3 hidden sm:hidden md:block lg:block"
-        />
         {data.firstName + " " + data.lastName}
       </div>
       <h4 className="my-auto capitalize text-[0.6rem] sm:text-[0.7rem] md:text-[0.8rem] lg:text-[1rem] text-[#0066b2]zz">

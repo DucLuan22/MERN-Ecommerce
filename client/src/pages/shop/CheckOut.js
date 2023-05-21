@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Axios from "../../configs/axiosConfig";
 import { checkout } from "../../features/shop/orderSlice";
 import { clearCart, resetAmount } from "../../features/shop/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 function CheckOut() {
   const { cart, totalAmount } = useSelector((state) => state.cart);
@@ -19,6 +20,7 @@ function CheckOut() {
   const [ward, setWard] = useState("");
   const [wards, setWards] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { loggedUser } = useSelector((state) => state.auth);
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -86,6 +88,7 @@ function CheckOut() {
         paymentType: "",
       });
     }
+    navigate("/OrderSuccess");
   };
 
   return (

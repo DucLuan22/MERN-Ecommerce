@@ -6,12 +6,12 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="h-[404px] w-[100%] relative border-t-[1px] mt-20">
+    <div className="h-[404px] w-[100%] relative border-t-[1px]">
       <div className="absolute w-[155px] h-[154px] right-2 top-[-10%] z-[-1]"></div>
       <div className="h-[100%] w-[99%]  grid grid-cols-2">
         <div className="flex flex-col">
           <h1 className="capitalize ml-14 mt-10 text-[20px] sm:text-[25px] md:text-[30px] lg:text-[40px] xl:text-[45px] font-normal ">
-            online-shop
+            EShopping
           </h1>
           <p className="mx-14 mt-6 font-normal text-[9px] sm:text-[12px] md:text-[14px] lg:text-[16px] xl:text-[18px]  leading-[22px] text-[#504A41]">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Blandit

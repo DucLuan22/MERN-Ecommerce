@@ -104,7 +104,7 @@ function Navbar() {
     <nav className="shadow-md w-screen relative top-0 left-0 z-10">
       <div className="flex items-center justify-evenly md:justify-around py-4 md:px-10 px-7">
         <div className="font-bold text-3xl cursor-pointer flex items-center text-[#4A99D3]">
-          Luan
+          EShopping
         </div>
         <div className="w-[250px] md:w-[30%] mr-10 md:mr-0">
           {products.length > 0 && (

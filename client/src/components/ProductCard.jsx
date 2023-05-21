@@ -109,7 +109,7 @@ const ProductCard = ({ data }) => {
             ) : (
               <div>
                 <BsTrash className="inline mr-1 mb-1" />
-                Remove from wishlist
+                Remove wishlist
               </div>
             )}
           </button>
