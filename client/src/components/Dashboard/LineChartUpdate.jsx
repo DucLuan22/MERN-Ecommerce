@@ -41,7 +41,7 @@ function LineChartUpdate() {
     labels: Object.keys(lineChartData),
     datasets: [
       {
-        label: "Sales Unit",
+        label: isUnitMode ? "Sales Unit" : "Revenue",
         data: Object.keys(lineChartData).map(
           (key) => lineChartData[key][dataType]
         ),

@@ -19,7 +19,7 @@ function CarouselStore() {
         className="object-fill max-w-fit h-[500px] md:h-fit"
       />
       <img
-        src="https://flowbite.com/docs/images/carousel/carousel-4.svg"
+        src="https://images.unsplash.com/photo-1505330622279-bf7d7fc918f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
         alt="..."
       />
       <img

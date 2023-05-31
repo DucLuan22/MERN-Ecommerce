@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import ProductCard from "./ProductCard";
-const Pagination = ({ data }) => {
+const Pagination = ({ data, numberOfPage }) => {
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 10;
+  const itemsPerPage = 9;
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-
     setCurrentItems(data.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(data.length / itemsPerPage));
   }, [itemOffset, itemsPerPage, data]);

@@ -10,7 +10,7 @@ function OrderStatus() {
     <div className="grid  grid-cols-1 sm:grid-cols-2 md:grid-cols-4 text-[#414479]">
       <span className="flex justify-between shadow-lg md:w-[300px] h-[120px] items-center px-6 rounded-lg ">
         <div className="">
-          <h2 className="font-semibold text-4xl">2,403</h2>
+          <h2 className="font-semibold text-4xl">10</h2>
           <p className="text-gray-500 text-sm">New Orders</p>
           <p className="text-gray-500 text-sm">in this week</p>
         </div>
@@ -18,7 +18,7 @@ function OrderStatus() {
       </span>
       <span className="flex justify-between shadow-xl md:w-[300px] h-[120px] items-center px-6 rounded-lg">
         <div className="">
-          <h2 className="font-semibold text-4xl">2,403</h2>
+          <h2 className="font-semibold text-4xl">0</h2>
           <p className="text-gray-500 text-sm">Scheduled Deliveries</p>
           <p className="text-gray-500 text-sm">in this week</p>
         </div>
@@ -26,7 +26,7 @@ function OrderStatus() {
       </span>
       <span className="flex justify-between shadow-xl md:w-[300px] h-[120px] items-center px-6 rounded-lg">
         <div className="">
-          <h2 className="font-semibold text-4xl">2,403</h2>
+          <h2 className="font-semibold text-4xl">0</h2>
           <p className="text-gray-500 text-sm">Cancelled Orders</p>
           <p className="text-gray-500 text-sm">in this week</p>
         </div>
@@ -34,7 +34,7 @@ function OrderStatus() {
       </span>
       <span className="flex justify-between shadow-xl md:w-[300px] h-[120px] items-center px-6 rounded-lg">
         <div className="">
-          <h2 className="font-semibold text-4xl">2,403</h2>
+          <h2 className="font-semibold text-4xl">0</h2>
           <p className="text-gray-500 text-sm">New Orders</p>
           <p className="text-gray-500 text-sm">in this week</p>
         </div>

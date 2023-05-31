@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { addToCart } from "../features/shop/cartSlice";
 import { addToWishlist } from "../features/shop/wishlistSlice";
@@ -10,7 +10,7 @@ import { BsTrash } from "react-icons/bs";
 const ProductCard = ({ data }) => {
   const dispatch = useDispatch();
   const { wishlist } = useSelector((state) => state.wishlist);
-  const { loggedUser } = useSelector((state) => state.auth);
+  const { loggedUser, isLogin } = useSelector((state) => state.auth);
   const [isWishlist, setIsWishlist] = useState(false);
   useEffect(() => {
     const item = wishlist.find((product) => product._id === data._id);
@@ -18,8 +18,8 @@ const ProductCard = ({ data }) => {
       setIsWishlist(true);
     }
   }, [wishlist, data._id]);
-
-  const handleBuy = () => {
+  const navigate = useNavigate();
+  const handleBuy = (state) => {
     dispatch(
       addToCart({
         input: { product_id: data._id, user_id: loggedUser._id },
@@ -33,14 +33,19 @@ const ProductCard = ({ data }) => {
       })
     );
 
-    toast.success("Item added to cart", {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      draggable: true,
-      progress: undefined,
-    });
+    if (isLogin) {
+      toast.success("Item added to cart", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    if (!isLogin) {
+      navigate("/auth/login");
+    }
   };
 
   const handleWishlist = (state) => {
@@ -55,7 +60,7 @@ const ProductCard = ({ data }) => {
         },
       })
     );
-    if (state === "Remove") {
+    if (state === "Remove" && isLogin) {
       toast.error("Item remove wishlist.", {
         position: "top-right",
         autoClose: 2000,
@@ -64,9 +69,13 @@ const ProductCard = ({ data }) => {
         draggable: true,
         progress: undefined,
       });
+
+      if (!isLogin) {
+        navigate("/auth/login");
+      }
       setIsWishlist(false);
     }
-    if (state === "Add") {
+    if (state === "Add" && isLogin) {
       toast.success("Item added to wishlist.", {
         position: "top-right",
         autoClose: 2000,

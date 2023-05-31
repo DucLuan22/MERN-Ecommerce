@@ -4,7 +4,7 @@ import OrdersProductDropList from "./OrdersProductDropList";
 function OrdersCard({ data }) {
   return (
     <div
-      className="grid grid-cols-8 w-full border-b-[1px] h-[75px]"
+      className="grid grid-cols-9 w-full border-b-[1px] h-[75px]"
       key={data.id}
     >
       <input
@@ -17,7 +17,7 @@ function OrdersCard({ data }) {
       <div className="my-auto capitalize text-[0.6rem] sm:text-[0.7rem] md:text-[0.8rem] lg:text-[1rem] text-[#002D62] font-bold flex items-center col-start-3 col-end-5">
         {data.firstName + " " + data.lastName}
       </div>
-      <h4 className="my-auto capitalize text-[0.6rem] sm:text-[0.7rem] md:text-[0.8rem] lg:text-[1rem] text-[#0066b2]zz">
+      <h4 className="my-auto capitalize text-[0.6rem] sm:text-[0.7rem] md:text-[0.8rem] lg:text-[1rem] text-[#0066b2] col-start-5 col-end-7">
         {data.phone}
       </h4>
       <div className="my-auto capitalize text-[0.6rem] sm:text-[0.7rem] md:text-[0.8rem] lg:text-[1rem] text-[#0066b2] flex items-center">

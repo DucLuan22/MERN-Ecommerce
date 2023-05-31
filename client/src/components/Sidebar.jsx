@@ -69,7 +69,7 @@ const Sidebar = () => {
               !open && "scale-0"
             }`}
           >
-            Luan
+            EShopping
           </h1>
         </div>
         <ul>

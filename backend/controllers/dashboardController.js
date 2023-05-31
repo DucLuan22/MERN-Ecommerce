@@ -1,6 +1,7 @@
 const Product = require("../models/Product");
 const Order = require("../models/Order");
-
+const Brand = require("../models/Brand");
+const Category = require("../models/Category");
 exports.getProductSales = async (req, res, next) => {
   try {
     const data = await Order.find({});
@@ -29,18 +30,24 @@ exports.getProductSales = async (req, res, next) => {
 
     // Loop through the uniqueItems object and format each item as a new object with a totalOrdered field
     for (const item of Object.values(uniqueItems)) {
-      const product = await Product.findById(item.product_id).then((data) => {
-        totalOrderedList.push({
-          product_id: item.product_id,
-          quantity: item.quantity,
-          subTotal: item.subTotal,
-          totalQuantity: item.quantity,
-          totalAmountOrdered: item.quantity * item.subTotal,
-          name: data.name,
-          img: data.img,
-          price: data.price,
-        });
-      });
+      const product = await Product.findById(item.product_id).then(
+        async (data) => {
+          const brand = await Brand.findById(data.brand);
+          const category = await Category.findById(data.category);
+          totalOrderedList.push({
+            product_id: item.product_id,
+            quantity: item.quantity,
+            subTotal: item.subTotal,
+            totalQuantity: item.quantity,
+            totalAmountOrdered: item.quantity * item.subTotal,
+            name: data.name,
+            img: data.img,
+            price: data.price,
+            brand: brand.name,
+            category: category.name,
+          });
+        }
+      );
     }
     totalOrderedList.sort((a, b) => b.totalQuantity - a.totalQuantity);
     totalOrderedList = totalOrderedList.slice(0, 5);
