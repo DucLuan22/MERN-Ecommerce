@@ -12,7 +12,6 @@ export const addProduct = createAsyncThunk(
       postData.append("stock", data.stock);
       postData.append("brand", data.brand);
       postData.append("category", data.category);
-
       const response = await Axios.post("/api/product/add", postData);
       return response.data.data;
     } catch (error) {
@@ -74,6 +73,20 @@ export const writeReview = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await Axios.post(`/api/store/createReview/`, data);
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const deleteReview = createAsyncThunk(
+  "product/deleteReview",
+  async (data, thunkAPI) => {
+    try {
+      const response = await Axios.delete(`/api/store/deleteReview/`, { data });
+
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -84,6 +97,8 @@ export const writeReview = createAsyncThunk(
 const initialState = {
   isLoading: false,
   errorMessage: "",
+  isLoadingAdd: false,
+  isLoadingDelete: false,
   products: [],
   product: {},
 };
@@ -173,17 +188,38 @@ const productSlice = createSlice({
     });
 
     build.addCase(writeReview.fulfilled, (state, action) => {
-      state.isLoading = false;
+      state.isLoadingAdd = false;
       state.product.reviews.push(action.payload);
     });
 
     build.addCase(writeReview.rejected, (state, action) => {
-      state.isLoading = false;
+      state.isLoadingAdd = false;
       state.errorMessage = action.payload.message;
     });
 
     build.addCase(writeReview.pending, (state, action) => {
-      state.isLoading = true;
+      state.isLoadingAdd = true;
+    });
+
+    build.addCase(deleteReview.pending, (state, action) => {
+      state.isLoadingDelete = true;
+    });
+
+    build.addCase(deleteReview.fulfilled, (state, action) => {
+      state.isLoadingDelete = false;
+      state.product = {
+        ...state.product,
+        reviews: state.product.reviews.filter(
+          (review) => review._id !== action.payload.review_id
+        ),
+      };
+    });
+
+    build.addCase(deleteReview.rejected, (state, action) => {
+      state.isLoadingDelete = false;
+      state.errorMessage = action.payload.message;
+      console.log(action.error);
+      console.log(action.payload);
     });
   },
 });

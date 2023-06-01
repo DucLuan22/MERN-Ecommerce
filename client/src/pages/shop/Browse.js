@@ -48,10 +48,9 @@ const Browse = () => {
   };
 
   return (
-    <div className="w-screen h-screen overflow-hidden">
+    <div className="w-screen h-screen">
       <main className="flex flex-col md:flex-row h-full">
         <Filter setProducts={setProducts} setResult={setResult} open={open} />
-
         <section className="flex flex-col w-full">
           <div className="flex justify-between ml-6 md:ml-0 lg:mr-40 items-center p-2 mr-3 md:mr-0">
             <p className="text-xl font-semibold">Results: {result}</p>

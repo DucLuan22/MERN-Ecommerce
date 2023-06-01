@@ -17,7 +17,7 @@ exports.register = async (req, res, next) => {
     const confirmedToken = user.getConfirmedToken();
     await user.save();
 
-    const confirmUrl = `http://localhost:3000/auth/confirmRegistration/${confirmedToken}`;
+    const confirmUrl = `${process.env.HOST_URL}auth/confirmRegistration/${confirmedToken}`;
 
     const message = `<h1>You have create a new account</h1>
     <p>Please go to this link to confirm your registration</p>
@@ -97,7 +97,7 @@ exports.login = async (req, res, next) => {
       const confirmedToken = user.getConfirmedToken();
       await user.save();
 
-      const confirmUrl = `http://localhost:3000/auth/confirmRegistration/${confirmedToken}`;
+      const confirmUrl = `${process.env.HOST_URL}auth/confirmRegistration/${confirmedToken}`;
 
       const message = `<h1>You have create a new account</h1>
     <p>Please go to this link to confirm your registration</p>
@@ -147,7 +147,7 @@ exports.forgotPassword = async (req, res, next) => {
     await user.save();
 
     //Template for the verification email
-    const resetUrl = `http://localhost:3000/auth/resetPassword/${resetToken}`;
+    const resetUrl = `${process.env.HOST_URL}auth/resetPassword/${resetToken}`;
 
     const message = `<h1>You have requested a password reset</h1>
     <p>Please go to this link to reset your password</p>

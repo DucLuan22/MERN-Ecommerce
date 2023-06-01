@@ -21,7 +21,9 @@ const ProductPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [isWishlist, setIsWishlist] = useState(false);
   const dispatch = useDispatch();
-  const { product, isLoading } = useSelector((state) => state.product);
+  const { product, isLoading, isLoadingAdd, isLoadingDelete } = useSelector(
+    (state) => state.product
+  );
   const { loggedUser } = useSelector((state) => state.auth);
   const { wishlist } = useSelector((state) => state.wishlist);
   const { cart } = useSelector((state) => state.cart);
@@ -141,18 +143,6 @@ const ProductPage = () => {
             <h1 className=" text-3xl md:text-5xl font-semibold mb-3">
               {product.name}
             </h1>
-            <div>
-              <Rating>
-                <Rating.Star />
-                <Rating.Star />
-                <Rating.Star />
-                <Rating.Star />
-                <Rating.Star filled={false} />
-                <p className="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-                  4.95 out of 5
-                </p>
-              </Rating>
-            </div>
             <h2 className="my-3 text-xl md:text-2xl font-semibold">
               Price: ${product.price}
             </h2>
@@ -211,7 +201,7 @@ const ProductPage = () => {
             {product && <RatingComponent />}
           </div>
           <div className="col-span-4 md:col-span-2 sm:ml-0 mr-1">
-            {product && (
+            {!isLoadingAdd && !isLoadingDelete && (
               <ReviewsContainer
                 data={product?.reviews}
                 product_id={product_id}

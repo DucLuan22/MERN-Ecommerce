@@ -15,11 +15,14 @@ const productSchema = mongoose.Schema(
     img: {
       type: String,
     },
+    description: {
+      type: String,
+    },
     reviews: [
       {
         user_id: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
         text: { type: String },
-        rating: { type: Number },
+        rating: { type: String },
         createdAt: { type: Date, default: Date.now },
       },
     ],

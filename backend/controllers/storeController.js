@@ -170,8 +170,17 @@ exports.createReview = async (req, res, next) => {
 
     product.reviews.push({ user_id, rating, text });
     product.save();
-
-    res.status(200).json({ product_id, user_id, rating, text });
+    const newReview = product.reviews[product.reviews.length - 1];
+    res
+      .status(200)
+      .json({
+        product_id,
+        user_id,
+        rating,
+        text,
+        _id: newReview._id,
+        createdAt: newReview.createdAt,
+      });
   } catch (error) {
     next(error);
   }
@@ -278,13 +287,13 @@ exports.deleteReview = async (req, res, next) => {
     );
 
     if (!productReview) {
-      return next(new ErrorResponse("Can't find product", 400));
+      return next(new ErrorResponse("Can't find product review", 400));
     }
     product.reviews = product.reviews.filter(
       (review) => review._id.toString() !== review_id
     );
     product.save();
-    res.status(200).json(productReview);
+    res.status(200).json({ product_id, user_id, review_id });
   } catch (error) {
     next(error);
   }

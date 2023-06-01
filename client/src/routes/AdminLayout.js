@@ -7,10 +7,11 @@ import BrandAdminPage from "../pages/admin/BrandAdminPage";
 import Sidebar from "../components/Sidebar";
 import PrivateAdminRoutes from "../components/PrivateRoutes/PrivateAdminRoutes";
 import { verifyAdminToken } from "../features/auth/authSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import OrdersPage from "../pages/admin/OrdersPage";
 
 export const AdminLayout = () => {
+  const { isLoadingToken } = useSelector((state) => state.auth);
   const token = localStorage.getItem("authAdminToken");
   const dispatch = useDispatch();
   useEffect(() => {
@@ -25,13 +26,15 @@ export const AdminLayout = () => {
     <div className="flex">
       <Sidebar />
       <Routes>
-        <Route element={<PrivateAdminRoutes />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/category" element={<CategoryAdminPage />} />
-          <Route path="/product" element={<ProductAdminPage />} />
-          <Route path="/brand" element={<BrandAdminPage />} />
-          <Route path="/orders" element={<OrdersPage />} />
-        </Route>
+        {!isLoadingToken && (
+          <Route element={<PrivateAdminRoutes />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/category" element={<CategoryAdminPage />} />
+            <Route path="/product" element={<ProductAdminPage />} />
+            <Route path="/brand" element={<BrandAdminPage />} />
+            <Route path="/orders" element={<OrdersPage />} />
+          </Route>
+        )}
       </Routes>
     </div>
   );

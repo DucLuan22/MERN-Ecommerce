@@ -7,7 +7,7 @@ function FilterCard({ data }) {
         <img
           src={require(`../../Images/${data.img}`)}
           alt=""
-          className="w-[150px] sm:w-[210px] md:w-[260px] lg:w-[300px] h-[230px]"
+          className="w-[250px] sm:w-[210px] md:w-[260px] lg:w-[300px] h-[230px]"
         />
         <h1 className="text-xl font-semibold w-[200px] mx-auto">
           {data.name.length >= 25

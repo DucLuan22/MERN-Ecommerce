@@ -92,7 +92,7 @@ function CheckOut() {
   };
 
   return (
-    <div className="mt-20 mx-3 md:mx-10 lg:mx-16 xl:mx-24">
+    <div className="mx-3 md:mx-10 lg:mx-16 xl:mx-24">
       <Breadcrumb aria-label="Default breadcrumb example">
         <Breadcrumb.Item href="#" icon={HiHome}>
           Home

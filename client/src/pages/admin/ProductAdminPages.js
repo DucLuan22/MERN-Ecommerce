@@ -76,6 +76,11 @@ const ProductAdminPage = () => {
         label: "Upload Product Image",
         type: "file",
       },
+      {
+        name: "Description",
+        label: "Upload Product Image",
+        type: "text",
+      },
     ],
   };
 
@@ -84,6 +89,7 @@ const ProductAdminPage = () => {
     "Product Name",
     "stock",
     "category",
+    "Description",
     "brand",
     "price",
   ];

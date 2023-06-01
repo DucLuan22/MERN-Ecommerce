@@ -52,6 +52,7 @@ export const verifyAdminToken = createAsyncThunk(
 );
 const initialState = {
   isLoading: true,
+  isLoadingToken: true,
   isSuccess: {},
   errorMessage: "",
   isLogin: false,
@@ -102,17 +103,17 @@ const authSlice = createSlice({
     });
 
     build.addCase(verifyAdminToken.fulfilled, (state, action) => {
-      state.isLoading = false;
+      state.isLoadingToken = false;
       state.loggedAdmin = action.payload;
       state.isAdminLogin = true;
     });
 
     build.addCase(verifyAdminToken.pending, (state, action) => {
-      state.isLoading = true;
+      state.isLoadingToken = true;
     });
 
     build.addCase(verifyAdminToken.rejected, (state, action) => {
-      state.isLoading = false;
+      state.isLoadingToken = false;
       state.errorMessage = action.payload.error;
     });
   },
