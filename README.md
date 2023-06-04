@@ -58,3 +58,14 @@ _Below is an example of how you can instruct your audience on installing and set
    JWT_SECRET: <JWTOKEN SECRET KEY>
    HOST_URL: <URL OF THE FRONT-END>
    ```
+
+## Screenshots
+> ![App Screenshot](https://cdn.discordapp.com/attachments/518782950129795073/1114809853135831080/image.png)
+
+> ![App Screenshot](https://cdn.discordapp.com/attachments/518782950129795073/1114957082710507531/image.png)
+
+> ![App Screenshot](https://cdn.discordapp.com/attachments/518782950129795073/1114963561840656444/image.png)
+
+> ![App Screenshot](https://cdn.discordapp.com/attachments/518782950129795073/1114963734943764500/image.png)
+
+
